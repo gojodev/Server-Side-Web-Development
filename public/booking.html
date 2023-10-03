@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking</title>
+    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+</head>
+
+<body>
+    <section id="welcome" class="section-borders">
+        <a href="">
+            <img src="images/Nexus_Logo.webp" id="banner-logo">
+        </a>
+        <nav>
+            <a href="index.html"> Home </a>
+            <a href="booking.html" id="selected"> Bookings </a>
+            <a href="about.html"> About </a>
+            <a href="help.html"> Help </a>
+        </nav>
+    </section>
+
+    <br>
+    <!-- put all the bookings info onto one page to keep things simple -->
+    <section id="booking_container">
+        <section id="create">
+            <h1 class="booking_title">Create</h1>
+            <div class="booking_content">
+                <div>
+                    <input placeholder="Name" type="text" id="name" name="fav_language"><br>
+                    <input type="date" id="date" name="fav_language"><br>
+                    <label for="skill_level" id="skill_level_text">SKill level: </label>
+                    <select name="skill_level" id="skill_level">
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                    </select>
+                    <br><br>
+                    <input type="submit" value="Submit" id="submit_button">
+                    </form>
+                </div>
+        </section>
+
+        <section id="modify">
+            <h1 class="booking_title"> Modify </h1>
+            <div class="booking_content">
+
+            </div>
+        </section>
+
+        <section id="modify">
+            <h1 class="booking_title"> Delete </h1>
+            <div class="booking_content">
+
+            </div>
+        </section>
+    </section>
+
+
+    <script src="javascripts/booking.js"></script>
+</body>
+
+</html>
