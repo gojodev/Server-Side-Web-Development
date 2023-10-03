@@ -1,4 +1,7 @@
 // ? add a validation file?
+// todo: add a little x button at the top of the summarised booking details in the modify and delete section
+// todo: setup mongoDB
+// todo: add a favicon
 
 function getBookingDetails() {
     let name = document.getElementById("name").value;
@@ -25,7 +28,7 @@ function getBookingDetails() {
     };
 
     // ! send this to MongoDB later
-    console.log(data);
+    return data;
 }
 
 // this function doesn't need to wait for the submit button to be pressed
@@ -35,6 +38,16 @@ function autoDate() {
     document.getElementById("date").value = currentDate;
 }
 autoDate();
+
+function createBooking() {
+    
+}
+
+// ! this will also delete bookings
+// you will need event listeners
+function modifyBooking() {
+
+}
 
 document.getElementById("submit_button").addEventListener("click", getBookingDetails);
 

@@ -151,14 +151,20 @@ input:hover {
 }
 
 #booking_container {
-  /* ! to help visualise */
+  /* ! to help visualise remove later */
   border: 5px solid red;
   display: flex;
   justify-content: center;
 }
 
 #create,
-#modify,
-#delete {
-  width: 33%;
+#modify {
+  width: 50%;
+}
+
+.details {
+  color: white;
+  background-color: var(--accent);
+  padding: 10px;
+  border-radius: 20px;
 }
