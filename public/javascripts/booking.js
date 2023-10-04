@@ -1,7 +1,68 @@
 // ? add a validation file?
+// it may be tempteing to use esbuild and a bundler but use express js to request data from html
 // todo: add a little x button at the top of the summarised booking details in the modify and delete section
 // todo: setup mongoDB
 // todo: add a favicon
+
+// ! GLOBAL
+let active_bookings = 0;
+
+// will only display at max 4 bookings and hide the rest
+function displayBookings() {
+    let booking_id;
+
+    for (let i = 0; i < not_booked; i++) {
+        booking_id = `booking${i + 1}`;
+        console.log("showing: ", booking_id);
+        document.getElementById(booking_id).classList.toggle("show");
+    }
+}
+
+// active_bookings = 2;
+function hideBookings() {
+    console.log("active bookings: ", active_bookings);
+    if (active_bookings == 0) {
+        for (let i = 0; i < 4; i++) {
+            booking_id = `booking${i + 1}`;
+            console.log("hiding: ", booking_id);
+            document.getElementById(booking_id).classList.toggle("hide");
+        }
+    }
+    else {
+        for (let i = 0; i < active_bookings; i++) {
+            booking_id = `booking${4 - i}`;
+            console.log("hiding: ", booking_id);
+            document.getElementById(booking_id).classList.toggle("hide");
+        }
+    }
+}
+
+
+// ! GLOBAL
+/**
+ * 
+ * @param {JSON} data 
+ */
+function createBooking(data) {
+    let name = data.name;
+    let date = data.date;
+    let skill_level = data.skill_level;
+
+    console.log("Booking added, active bookings: ", active_bookings);
+    active_bookings++;
+    let details = `${name},${date},${skill_level}`;
+    console.log(details);
+}
+
+
+// ! this will also delete bookings
+// you will need event listeners
+function modifyBooking() {
+
+}
+
+// ! hides the booking details before the page laods
+hideBookings();
 
 function getBookingDetails() {
     let name = document.getElementById("name").value;
@@ -18,17 +79,18 @@ function getBookingDetails() {
     let valid_date = input_date >= current_date;
     let valid_inputs = !([name, date, skill_level].includes(""))
 
-    console.log("valid_date: ", valid_date);
-    console.log("valid_inputs: ", valid_inputs);
-
+    // ! send this to MongoDB later
     let data = {
         "name": name,
         "date": date,
         "skill_level": skill_level
     };
 
-    // ! send this to MongoDB later
-    return data;
+    if (active_bookings < 5) {
+        active_bookings++;
+    }
+
+    createBooking(data);
 }
 
 // this function doesn't need to wait for the submit button to be pressed
@@ -39,16 +101,6 @@ function autoDate() {
 }
 autoDate();
 
-function createBooking() {
-    
-}
-
-// ! this will also delete bookings
-// you will need event listeners
-function modifyBooking() {
-
-}
-
 document.getElementById("submit_button").addEventListener("click", getBookingDetails);
 
 function test_input() {
@@ -57,4 +109,4 @@ function test_input() {
 }
 
 // ! for testing only comment out or delete later
-test_input()
+// test_input()
