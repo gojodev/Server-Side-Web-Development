@@ -110,7 +110,7 @@ a:hover,
   align-items: center;
   display: flex;
   justify-content: center;
-  width: 400px;
+  width: 35vw;
   height: 250px;
   padding: 15px;
   border-radius: 20px;
@@ -162,8 +162,8 @@ input:hover {
   justify-content: center;
 }
 
-#create,
-#modify {
+#create_section,
+#modify_section {
   width: 50%;
 }
 
@@ -186,4 +186,18 @@ input:hover {
 /*  shows how many bookings are allowed to the user */
 ul {
   color: white;
+}
+
+#error_section {
+  color: white;
+  background: red;
+  padding: 15px;
+  width: 50%;
+  text-align: center;
+  margin: auto;
+  border-radius: 5px;
+}
+
+.error_borders {
+  border: 5px solid red;
 }

@@ -23,10 +23,12 @@
 
     <br>
     <!-- put all the bookings info onto one page to keep things simple -->
+    <
+
     <section id="booking_container">
-        <section id="create">
+        <section id="create_section">
             <h1 class="booking_title">Create</h1>
-            <div class="booking_content">
+            <div class="booking_content" id="create_container">
                 <div>
                     <input placeholder="Name" type="text" id="name" name="fav_language"><br>
                     <input type="date" id="date" name="fav_language"><br>
@@ -43,9 +45,9 @@
         </section>
 
         <!-- ! limit the amount of bookings to 4 -->
-        <section id="modify">
+        <section id="modify_section">
             <h1 class="booking_title"> Modify &amp; Delete</h1>
-            <div class="booking_content">
+            <div class="booking_content" id="modify_container">
                 <ul>
                     <li>
                         <h3 class="details" id="booking1"> name, date, skill level </h3>
@@ -65,6 +67,14 @@
                 </ul>
             </div>
         </section>
+    </section>
+
+    <br>
+
+    <section id="error_section">
+        <div id="error_text">
+            You have booked more than 4 rooms
+        </div>
     </section>
 
 

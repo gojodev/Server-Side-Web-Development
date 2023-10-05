@@ -3,9 +3,26 @@
 // todo: add a little x button at the top of the summarised booking details in the modify and delete section
 // todo: setup mongoDB
 // todo: add a favicon
+// todo: imbetween the nav bar on the right and the logo on the left put "Coding Classes Workshop"
 
+// firebase hosting:channel:deploy preview (at root)
 // ! GLOBAL
 let active_bookings = 0;
+
+// todo: create error message section
+function error_msg(message, element_ids) {
+
+    for (let i = 0; i < element_ids.length; i++) {
+        document.getElementById(element_ids[i]).classList.toggle("error_borders")
+    }
+
+    document.getElementById("error_section").classList.toggle("hide");
+    document.getElementById("error_text").innerHTML = message;
+    console.log(message);
+}
+
+// hide the error section when the page loads
+document.getElementById("error_section").classList.toggle("hide");
 
 // will only display at max 4 bookings and hide the rest
 function displayBookings() {
@@ -13,25 +30,24 @@ function displayBookings() {
 
     for (let i = 0; i < not_booked; i++) {
         booking_id = `booking${i + 1}`;
-        console.log("showing: ", booking_id);
+
         document.getElementById(booking_id).classList.toggle("show");
     }
 }
 
 // active_bookings = 2;
 function hideBookings() {
-    console.log("active bookings: ", active_bookings);
     if (active_bookings == 0) {
         for (let i = 0; i < 4; i++) {
             booking_id = `booking${i + 1}`;
-            console.log("hiding: ", booking_id);
+
             document.getElementById(booking_id).classList.toggle("hide");
         }
     }
     else {
         for (let i = 0; i < active_bookings; i++) {
             booking_id = `booking${4 - i}`;
-            console.log("hiding: ", booking_id);
+
             document.getElementById(booking_id).classList.toggle("hide");
         }
     }
@@ -43,20 +59,24 @@ function hideBookings() {
  * 
  * @param {JSON} data 
  */
-function createBooking(data) {
+function createBooking(data, booking_id) {
     let name = data.name;
-    let date = data.date;
+    let input_date = data.date;
     let skill_level = data.skill_level;
 
-    console.log("Booking added, active bookings: ", active_bookings);
-    active_bookings++;
-    let details = `${name},${date},${skill_level}`;
-    console.log(details);
+    let date = new Date().toDateString();
+    let details = `${name} , ${date} , ${skill_level}`;
+    // ! validation
+    if (active_bookings < 5) {
+        active_bookings++;
+        let booking = document.getElementById(booking_id);
+        booking.innerHTML = details;
+        booking.classList.toggle("show");
+    }
 }
 
 
 // ! this will also delete bookings
-// you will need event listeners
 function modifyBooking() {
 
 }
@@ -76,8 +96,18 @@ function getBookingDetails() {
     input_date = input_date.getTime();
     current_date = current_date.getTime();
 
-    let valid_date = input_date >= current_date;
-    let valid_inputs = !([name, date, skill_level].includes(""))
+    let valid_date = input_date >= current_date && date.includes("");
+    let valid_name = !name.includes("");
+    let valid_skill_level = !skill_level.includes("");
+
+    // not use switch cases because i'm using different expressions
+    if (!valid_name) {
+        error_msg("Invalid name input", ["name"]);
+    }
+    if (!valid_date) {
+        error_msg("Invalid date", ["date"]);
+    }
+    // no need to 
 
     // ! send this to MongoDB later
     let data = {
@@ -86,11 +116,21 @@ function getBookingDetails() {
         "skill_level": skill_level
     };
 
-    if (active_bookings < 5) {
-        active_bookings++;
+    // +1 because youof 0 indexing and the variable is just under the createBooking()
+    // which is used to increase the value of active_bookings
+    let id = active_bookings + 1;
+    if (id < 5) {
+        booking_id = `booking${id}`;
+        createBooking(data, booking_id);
     }
+    else {
+        // ! validation
+        let element_ids = ["create_container", "modify_container"];
+        error_msg("you have booked more than 4 rooms.", element_ids);
 
-    createBooking(data);
+        document.getElementById("error_section").classList.toggle("hide");
+        document.getElementById("error_text").innerHTML = message;
+    }
 }
 
 // this function doesn't need to wait for the submit button to be pressed
