@@ -201,3 +201,9 @@ ul {
 .error_borders {
   border: 5px solid red;
 }
+
+#workshop {
+  color: white;
+  text-align: cen;
+  font-size: 2rem;
+}
