@@ -4,6 +4,7 @@
 // todo: setup mongoDB
 // todo: add a favicon
 // todo: imbetween the nav bar on the right and the logo on the left put "Coding Classes Workshop"
+// todo: add a clear all button
 
 // firebase hosting:channel:deploy preview (at root)
 // ! GLOBAL
@@ -18,7 +19,11 @@ function error_msg(message, element_ids) {
 
     document.getElementById("error_section").classList.toggle("hide");
     document.getElementById("error_text").innerHTML = message;
-    console.log(message);
+    console.log(message); // ! helps with debugging and will be removed later
+}
+
+function hide_errors() {
+    document.getElementById("error_section").classList.toggle("hide");
 }
 
 // hide the error section when the page loads
@@ -26,9 +31,7 @@ document.getElementById("error_section").classList.toggle("hide");
 
 // will only display at max 4 bookings and hide the rest
 function displayBookings() {
-    let booking_id;
-
-    for (let i = 0; i < not_booked; i++) {
+    for (let i = 0; i < active_bookings; i++) {
         booking_id = `booking${i + 1}`;
 
         document.getElementById(booking_id).classList.toggle("show");
@@ -53,6 +56,9 @@ function hideBookings() {
     }
 }
 
+// ! hides the booking details before the page laods
+hideBookings();
+
 
 // ! GLOBAL
 /**
@@ -60,6 +66,8 @@ function hideBookings() {
  * @param {JSON} data 
  */
 function createBooking(data, booking_id) {
+    // hide errors at the start of a new submission
+
     let name = data.name;
     let input_date = data.date;
     let skill_level = data.skill_level;
@@ -76,13 +84,11 @@ function createBooking(data, booking_id) {
 }
 
 
+// will added to the functions once the getBookingDetails and validation is working properly
 // ! this will also delete bookings
 function modifyBooking() {
 
 }
-
-// ! hides the booking details before the page laods
-hideBookings();
 
 function getBookingDetails() {
     let name = document.getElementById("name").value;
@@ -96,16 +102,21 @@ function getBookingDetails() {
     input_date = input_date.getTime();
     current_date = current_date.getTime();
 
-    let valid_date = input_date >= current_date && date.includes("");
-    let valid_name = !name.includes("");
-    let valid_skill_level = !skill_level.includes("");
+    let invalid_name = name == "";
+    let invalid_date = input_date > current_date;
+    let isError = false;
+
+    console.log("invalid_name: ", invalid_name);
+    console.log("invalid_date: ", invalid_date);
 
     // not use switch cases because i'm using different expressions
-    if (!valid_name) {
+    if (invalid_name) {
         error_msg("Invalid name input", ["name"]);
+        isError = true;
     }
-    if (!valid_date) {
-        error_msg("Invalid date", ["date"]);
+    if (invalid_date) {
+        // error_msg("Invalid date", ["date"]);
+        isError = true;
     }
     // no need to 
 
@@ -119,17 +130,11 @@ function getBookingDetails() {
     // +1 because youof 0 indexing and the variable is just under the createBooking()
     // which is used to increase the value of active_bookings
     let id = active_bookings + 1;
-    if (id < 5) {
+    if (id < 5 && isError == false) {
         booking_id = `booking${id}`;
+        displayBookings();
+        console.log("bookings: ", id);
         createBooking(data, booking_id);
-    }
-    else {
-        // ! validation
-        let element_ids = ["create_container", "modify_container"];
-        error_msg("you have booked more than 4 rooms.", element_ids);
-
-        document.getElementById("error_section").classList.toggle("hide");
-        document.getElementById("error_text").innerHTML = message;
     }
 }
 
