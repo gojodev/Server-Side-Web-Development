@@ -29,19 +29,9 @@ function hide_errors() {
     document.getElementById("error_section").classList.toggle("hide");
 }
 
-// hide the error section when the page loads
-document.getElementById("error_section").classList.toggle("hide");
+// ! hide the error seciton for the page lodas
+hide_errors();
 
-// will only display at max 4 bookings and hide the rest
-function displayBookings() {
-    for (let i = 0; i < active_bookings; i++) {
-        booking_id = `booking${i + 1}`;
-
-        document.getElementById(booking_id).classList.toggle("show");
-    }
-}
-
-// active_bookings = 2;
 function hideBookings() {
     if (active_bookings == 0) {
         for (let i = 0; i < 4; i++) {
@@ -69,21 +59,17 @@ hideBookings();
  * @param {JSON} data 
  */
 function createBooking(data, booking_id) {
-    // hide errors at the start of a new submission
-
     let name = data.name;
-    let input_date = data.date;
     let skill_level = data.skill_level;
 
     let date = new Date().toDateString();
     let details = `${name} , ${date} , ${skill_level}`;
     // ! validation
-    if (active_bookings < 5) {
-        active_bookings++;
-        let booking = document.getElementById(booking_id);
-        booking.innerHTML = details;
-        booking.classList.toggle("show");
-    }
+
+    active_bookings++;
+    let booking = document.getElementById(booking_id);
+    booking.innerHTML = details;
+    booking.classList.toggle("show");
 }
 
 
@@ -114,7 +100,7 @@ function getBookingDetails() {
         error_msg("Invalid name input", ["name"]);
         isError = true;
     }
-    if (invalid_date) {
+    else if (invalid_date) {
         error_msg("Invalid date", ["date"]);
         isError = true;
     }
@@ -130,12 +116,10 @@ function getBookingDetails() {
     // +1 because youof 0 indexing and the variable is just under the createBooking()
     // which is used to increase the value of active_bookings
     let id = active_bookings + 1;
-    if (id < 5 && isError == false) {
-        booking_id = `booking${id}`;
-        displayBookings();
-        console.log(booking_id);
-        createBooking(data, booking_id);
-    }
+    booking_id = `booking${id}`;
+    console.log(booking_id);
+    createBooking(data, booking_id);
+
 }
 
 // this function doesn't need to wait for the submit button to be pressed
@@ -154,4 +138,5 @@ function test_input() {
 }
 
 // ! for testing only comment out or delete later
+// test with name1, name2, etc and rmeove duplication and placement issues
 test_input()
