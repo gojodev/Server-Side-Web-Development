@@ -3,8 +3,11 @@
 // todo: add a little x button at the top of the summarised booking details in the modify and delete section
 // todo: setup mongoDB
 // todo: add a favicon
-// todo: imbetween the nav bar on the right and the logo on the left put "Coding Classes Workshop"
+// todo: fix placement with "Coding Classes Workshop"
 // todo: add a clear all button
+// todo: add a white border if the same person makes multiple bookings
+
+// ! bookings are being overwritten and are not being output to the corret location
 
 // firebase hosting:channel:deploy preview (at root)
 // ! GLOBAL
@@ -106,16 +109,13 @@ function getBookingDetails() {
     let invalid_date = input_date > current_date;
     let isError = false;
 
-    console.log("invalid_name: ", invalid_name);
-    console.log("invalid_date: ", invalid_date);
-
     // not use switch cases because i'm using different expressions
     if (invalid_name) {
         error_msg("Invalid name input", ["name"]);
         isError = true;
     }
     if (invalid_date) {
-        // error_msg("Invalid date", ["date"]);
+        error_msg("Invalid date", ["date"]);
         isError = true;
     }
     // no need to 
@@ -133,7 +133,7 @@ function getBookingDetails() {
     if (id < 5 && isError == false) {
         booking_id = `booking${id}`;
         displayBookings();
-        console.log("bookings: ", id);
+        console.log(booking_id);
         createBooking(data, booking_id);
     }
 }
@@ -154,4 +154,4 @@ function test_input() {
 }
 
 // ! for testing only comment out or delete later
-// test_input()
+test_input()
