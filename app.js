@@ -13,6 +13,8 @@ const PORT = 3000
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+const mongoose = require('mongoose');
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
