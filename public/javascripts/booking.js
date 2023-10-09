@@ -5,7 +5,9 @@
 // todo: add a favicon
 // todo: fix placement with "Coding Classes Workshop"
 // todo: add a clear all button
+// todo: link your socials
 // todo: add a white border if the same person makes multiple bookings
+// todo: on the home page show the different things that they will learn (nodejs, html, css, javascript, python, java etc...)
 
 // ! bookings are being overwritten and are not being output to the corret location
 

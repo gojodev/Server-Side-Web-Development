@@ -17,9 +17,10 @@
     "firebase": "^10.4.0",
     "http-errors": "~1.6.3",
     "http-proxy": "^1.18.1",
-    "jade": "^1.9.2",
+    "jade": "^0.31.2",
     "livereload": "^0.9.3",
     "mongodb": "^6.1.0",
+    "mongoose": "^7.6.0",
     "morgan": "~1.9.1"
   },
   "devDependencies": {
