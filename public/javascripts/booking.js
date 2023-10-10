@@ -1,9 +1,7 @@
 // ? add a validation file?
-// it may be tempteing to use esbuild and a bundler but use express js to request data from html
 // todo: add a little x button at the top of the summarised booking details in the modify and delete section
 // todo: setup mongoDB
 // todo: add a clear all button
-// todo: link your socials
 // todo: add a white border if the same person makes multiple bookings
 // todo: on the home page show the different things that they will learn (nodejs, html, css, javascript, python, java etc...)
 
@@ -60,10 +58,11 @@ hideBookings();
  */
 function createBooking(data, booking_id) {
     let name = data.name;
+    let email = data.email;
     let skill_level = data.skill_level;
 
     let date = new Date().toDateString();
-    let details = `${name} , ${date} , ${skill_level}`;
+    let details = `${name} , ${email} , ${date} , ${skill_level}`;
     // ! validation
 
     active_bookings++;
@@ -81,6 +80,7 @@ function modifyBooking() {
 
 function getBookingDetails() {
     let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
     let date = document.getElementById("date").value;
     let skill_level = document.getElementById("skill_level").value;
 
@@ -94,6 +94,8 @@ function getBookingDetails() {
     let invalid_name = name == "";
     let invalid_date = input_date > current_date;
     let isError = false;
+
+    // todo: validate email input
 
     // not use switch cases because i'm using different expressions
     if (invalid_name) {
@@ -109,6 +111,7 @@ function getBookingDetails() {
     // ! send this to MongoDB later
     let data = {
         "name": name,
+        "email":email,
         "date": date,
         "skill_level": skill_level
     };
@@ -134,6 +137,7 @@ document.getElementById("submit_button").addEventListener("click", getBookingDet
 
 function test_input() {
     document.getElementById("name").value = "Emmanuel Koledoye";
+    document.getElementById("email").value = "example@gmail.com";
     document.getElementById("skill_level").value = "Advanced";
 }
 
