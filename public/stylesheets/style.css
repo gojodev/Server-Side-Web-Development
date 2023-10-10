@@ -108,6 +108,7 @@ a:hover,
   text-align: center;
   margin: auto;
   border: 5px solid white;
+  background-color: black;
   align-items: center;
   display: flex;
   justify-content: center;
