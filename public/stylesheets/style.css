@@ -17,6 +17,7 @@
 body {
   background-color: #252526;
   font-family: 'Courier New', Courier, monospace;
+  min-height: 100vh;
 }
 
 #banner-logo {
@@ -148,6 +149,23 @@ input:hover {
   border-radius: 10px;
 }
 
+#submit_button,
+#clear_all {
+  width: 100%;
+}
+
+#clear_all {
+  color: white;
+  background-color: red;
+  transition: 0.2s;
+}
+
+#clear_all:hover {
+  background-color: white;
+  color: red;
+  border-radius: 10px;
+}
+
 #skill_level_text {
   color: white;
 }
@@ -206,4 +224,64 @@ ul {
   color: white;
   text-align: cen;
   font-size: 2rem;
+  text-align: center;
+}
+
+#id {
+  margin: auto;
+  vertical-align: middle;
+}
+
+.lang-imgs {
+  width: 150px;
+  float: left;
+}
+
+#langs {
+  display: flex;
+  flex: 1;
+}
+
+.lang-text {
+  margin: 20px;
+  float: right;
+  background-color: white;
+  color: var(--accent);
+  border-radius: 5px;
+  padding: 10px;
+  margin: auto;
+  width: 80%;
+  transform: 0.2s;
+  opacity: 0.8;
+}
+
+.lang-text:hover {
+  opacity: 0.9;
+}
+
+/* needed to hdie the bullet points  */
+#lang-ul {
+  list-style-type: none;
+}
+
+.lang-li {
+  display: flex;
+  flex: 1;
+}
+
+.bottom-images {
+  height: auto;
+  width: 100px;
+  transition: 0.2s;
+}
+
+.bottom-images:hover {
+  transform: scale(1.2);
+}
+
+footer {
+  margin-top: 0px;
+  border-top: 5px solid white;
+  margin: auto;
+  text-align: center;
 }

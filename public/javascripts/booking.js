@@ -2,8 +2,6 @@
 // it may be tempteing to use esbuild and a bundler but use express js to request data from html
 // todo: add a little x button at the top of the summarised booking details in the modify and delete section
 // todo: setup mongoDB
-// todo: add a favicon
-// todo: fix placement with "Coding Classes Workshop"
 // todo: add a clear all button
 // todo: link your socials
 // todo: add a white border if the same person makes multiple bookings
