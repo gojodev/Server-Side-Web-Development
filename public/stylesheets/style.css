@@ -17,7 +17,7 @@
 body {
   background-color: #252526;
   font-family: 'Courier New', Courier, monospace;
-  min-height: 100vh;
+  /* min-height: 100vh; */
 }
 
 #banner-logo {
@@ -149,11 +149,6 @@ input:hover {
   border-radius: 10px;
 }
 
-#submit_button,
-#clear_all {
-  width: 100%;
-}
-
 #clear_all {
   color: white;
   background-color: red;
@@ -164,6 +159,11 @@ input:hover {
   background-color: white;
   color: red;
   border-radius: 10px;
+}
+
+#submit_button,
+#clear_all {
+  width: 100%;
 }
 
 #skill_level_text {
@@ -207,10 +207,12 @@ ul {
 }
 
 #error_section {
+  margin: auto;
   color: white;
   background: red;
   padding: 15px;
   width: 50%;
+  display: block;
   text-align: center;
   margin: auto;
   border-radius: 5px;
@@ -280,7 +282,7 @@ ul {
 }
 
 footer {
-  margin-top: 0px;
+  display: block;
   border-top: 5px solid white;
   margin: auto;
   text-align: center;

@@ -92,7 +92,12 @@ function getBookingDetails() {
     current_date = current_date.getTime();
 
     let invalid_name = name == "";
-    let invalid_date = input_date > current_date;
+    let invalid_date = !(input_date >= current_date);
+
+    console.log("input_Date: ", input_date);
+    console.log("current_date: ", current_date);
+    console.log("valid date: ", input_date == current_date);
+
     let isError = false;
 
     // todo: validate email input
@@ -111,25 +116,34 @@ function getBookingDetails() {
     // ! send this to MongoDB later
     let data = {
         "name": name,
-        "email":email,
-        "date": date,
+        "email": email,
+        "date": input_date,
         "skill_level": skill_level
     };
 
     // +1 because youof 0 indexing and the variable is just under the createBooking()
     // which is used to increase the value of active_bookings
-    let id = active_bookings + 1;
-    booking_id = `booking${id}`;
-    console.log(booking_id);
-    createBooking(data, booking_id);
+    // also don't create the booking if there are errors
+    if (isError == false) {
+        let id = active_bookings + 1;
+        booking_id = `booking${id}`;
+        console.log(booking_id);
+        createBooking(data, booking_id);
+        console.log(booking_id, data);
+    }
 
 }
 
 // this function doesn't need to wait for the submit button to be pressed
 function autoDate() {
+
+
     // automically set the current date
-    let currentDate = new Date().toJSON().slice(0, 10);
-    document.getElementById("date").value = currentDate;
+    let today = new Date().toJSON().slice(0, 10);
+    let tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    console.log("tomorrow: ", tomorrow);
+    document.getElementById("date").value = tomorrow;
 }
 autoDate();
 
