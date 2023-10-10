@@ -224,7 +224,7 @@ ul {
 
 #workshop {
   color: white;
-  text-align: cen;
+  text-align: center;
   font-size: 2rem;
   text-align: center;
 }
@@ -286,4 +286,23 @@ footer {
   border-top: 5px solid white;
   margin: auto;
   text-align: center;
+}
+
+#notice {
+  width: 50%;
+  padding: 15px;
+  text-align: center;
+  border-radius: 5px;
+  margin: auto;
+  transition: 0.2s;
+}
+
+.not-flash, .default {
+  color: white;
+  background: var(--accent);
+}
+
+.flash {
+  color: var(--accent);
+  background: white;
 }

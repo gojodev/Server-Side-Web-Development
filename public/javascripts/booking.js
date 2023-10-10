@@ -136,12 +136,11 @@ function getBookingDetails() {
 
 // this function doesn't need to wait for the submit button to be pressed
 function autoDate() {
-
-
     // automically set the current date
     let today = new Date().toJSON().slice(0, 10);
     let tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow = tomorrow.toJSON().slice(0, 10);
     console.log("tomorrow: ", tomorrow);
     document.getElementById("date").value = tomorrow;
 }
@@ -154,6 +153,22 @@ function test_input() {
     document.getElementById("email").value = "example@gmail.com";
     document.getElementById("skill_level").value = "Advanced";
 }
+
+let counter = 0;
+function flashNotice() {
+    if (counter == 0) {
+        document.getElementById("notice").classList.toggle("flash");
+        counter = 1;
+    }
+    else {
+        document.getElementById("notice").classList.toggle("not-flash");
+        counter = 0;
+    }
+
+    setTimeout(flashNotice, 700);
+}
+
+flashNotice();
 
 // ! for testing only comment out or delete later
 // test with name1, name2, etc and rmeove duplication and placement issues
