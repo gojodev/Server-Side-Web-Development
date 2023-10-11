@@ -1,7 +1,8 @@
 // ? add a validation file?
 // todo: add a little x button at the top of the summarised booking details in the modify and delete section
 // todo: setup mongoDB
-// todo: add a clear all button
+// todo: add card payments details to booking.html
+// todo: add a   all button
 // todo: add a white border if the same person makes multiple bookings
 // todo: on the home page show the different things that they will learn (nodejs, html, css, javascript, python, java etc...)
 
@@ -31,21 +32,18 @@ function hide_errors() {
 hide_errors();
 
 function hideBookings() {
-    if (active_bookings == 0) {
-        for (let i = 0; i < 4; i++) {
-            booking_id = `booking${i + 1}`;
-
+    for (let i = 0; i < 4; i++) {
+        booking_id = `booking${i + 1}`;
+        let isHiden = document.getElementById(booking_id).classList.contains("hide");
+        if (!isHiden) {
             document.getElementById(booking_id).classList.toggle("hide");
         }
     }
-    else {
-        for (let i = 0; i < active_bookings; i++) {
-            booking_id = `booking${4 - i}`;
 
-            document.getElementById(booking_id).classList.toggle("hide");
-        }
-    }
+    // must reset the active bookings to zero after the purge
+    active_bookings = 0;
 }
+
 
 // ! hides the booking details before the page laods
 hideBookings();
@@ -63,12 +61,11 @@ function createBooking(data, booking_id) {
 
     let date = new Date().toDateString();
     let details = `${name} , ${email} , ${date} , ${skill_level}`;
-    // ! validation
 
     active_bookings++;
     let booking = document.getElementById(booking_id);
     booking.innerHTML = details;
-    booking.classList.toggle("show");
+    booking.classList.toggle("hide");
 }
 
 
@@ -88,31 +85,31 @@ function getBookingDetails() {
     let current_date = new Date();
     let input_date = new Date(date);
 
-    input_date = input_date.getTime();
-    current_date = current_date.getTime();
+    input_date_time = input_date.getTime();
+    current_date_time = current_date.getTime();
 
     let invalid_name = name == "";
-    let invalid_date = !(input_date >= current_date);
-
-    console.log("input_Date: ", input_date);
-    console.log("current_date: ", current_date);
-    console.log("valid date: ", input_date == current_date);
+    let invalid_date = !(input_date_time >= current_date_time);
+    let invalid_email = !(email.includes("@") && email.includes("."));
 
     let isError = false;
+    input_date = input_date.toDateString();
 
     // todo: validate email input
 
-    // not use switch cases because i'm using different expressions
+    // i'm not using switch cases because i'm using different expressions
     if (invalid_name) {
         error_msg("Invalid name input", ["name"]);
+        isError = true;
+    }
+    else if (invalid_email) {
+        error_msg("Invalid email input", ["email"]);
         isError = true;
     }
     else if (invalid_date) {
         error_msg("Invalid date", ["date"]);
         isError = true;
     }
-    // no need to 
-
     // ! send this to MongoDB later
     let data = {
         "name": name,
@@ -127,12 +124,12 @@ function getBookingDetails() {
     if (isError == false) {
         let id = active_bookings + 1;
         booking_id = `booking${id}`;
-        console.log(booking_id);
         createBooking(data, booking_id);
-        console.log(booking_id, data);
     }
 
 }
+
+document.getElementById("submit_button").addEventListener("click", getBookingDetails);
 
 // this function doesn't need to wait for the submit button to be pressed
 function autoDate() {
@@ -141,12 +138,22 @@ function autoDate() {
     let tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
     tomorrow = tomorrow.toJSON().slice(0, 10);
-    console.log("tomorrow: ", tomorrow);
     document.getElementById("date").value = tomorrow;
 }
 autoDate();
 
-document.getElementById("submit_button").addEventListener("click", getBookingDetails);
+function deleteAllBookings() {
+    // reset input fields
+    document.getElementById("name").value = "";
+    document.getElementById("email").value = "";
+    autoDate();
+    document.getElementById("skill_level").value = "Beginner";
+
+    // hide booking output/preview
+    hideBookings();
+}
+
+document.getElementById("clear_all").addEventListener("click", deleteAllBookings);
 
 function test_input() {
     document.getElementById("name").value = "Emmanuel Koledoye";
