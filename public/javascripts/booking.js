@@ -1,12 +1,8 @@
 // ? add a validation file?
 // todo: add a little x button at the top of the summarised booking details in the modify and delete section
 // todo: setup mongoDB
+// todo: make the slash red for the expiry date input
 // todo: add card payments details to booking.html
-// todo: add a   all button
-// todo: add a white border if the same person makes multiple bookings
-// todo: on the home page show the different things that they will learn (nodejs, html, css, javascript, python, java etc...)
-
-// ! bookings are being overwritten and are not being output to the corret location
 
 // firebase hosting:channel:deploy preview (at root)
 // ! GLOBAL
@@ -49,7 +45,6 @@ function hideBookings() {
 hideBookings();
 
 
-// ! GLOBAL
 /**
  * 
  * @param {JSON} data 
@@ -68,11 +63,18 @@ function createBooking(data, booking_id) {
     booking.classList.toggle("hide");
 }
 
+// todo: add card details
+function fillInfo(name, email, date) {
+    document.getElementById("name").value = "Emmanuel Koledoye";
+    document.getElementById("email").value = "example@gmail.com";
+    document.getElementById("skill_level").value = "Advanced";
+}
 
 // will added to the functions once the getBookingDetails and validation is working properly
 // ! this will also delete bookings
-function modifyBooking() {
-
+function modifyBooking(booking_id) {
+    let booking = document.getElementById(booking_id);
+    booking.classList.toggle("modify_borders");
 }
 
 function getBookingDetails() {
@@ -155,12 +157,6 @@ function deleteAllBookings() {
 
 document.getElementById("clear_all").addEventListener("click", deleteAllBookings);
 
-function test_input() {
-    document.getElementById("name").value = "Emmanuel Koledoye";
-    document.getElementById("email").value = "example@gmail.com";
-    document.getElementById("skill_level").value = "Advanced";
-}
-
 let counter = 0;
 function flashNotice() {
     if (counter == 0) {
@@ -177,6 +173,24 @@ function flashNotice() {
 
 flashNotice();
 
-// ! for testing only comment out or delete later
-// test with name1, name2, etc and rmeove duplication and placement issues
-test_input()
+// add spaces between every 4 numbers for card number input
+const card_number = document.getElementById("card_number");
+card_number.addEventListener("input", () => card_number.value = formatNumber(card_number.value.replaceAll(" ", "")));
+
+const formatNumber = (number) => number.split("").reduce((seed, next, index) => {
+    if (index !== 0 && !(index % 4)) seed += " ";
+    return seed + next;
+}, "");
+
+// add a slash automically for the expiry date
+const expiry_date = document.getElementById("expiry_date");
+expiry_date.addEventListener("input", () => {
+    let date = expiry_date.value.split("");
+
+    if (date.length == 4) {
+        // todo:  make the slash red
+        date.splice(2, 0, "/");
+        date = date.toString().replaceAll(",", "");;
+        expiry_date.value = date.toString();
+    }
+});
