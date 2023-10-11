@@ -6,6 +6,7 @@
 
 :root {
   --accent: #007acc;
+  --modify: orange;
   --section1: #3e3e42;
   --section2: #2d2d30;
 }
@@ -46,7 +47,7 @@ nav {
 
 nav>a {
   vertical-align: center;
-  font-size: 2rem;
+  font-size: 1.6rem;
   color: white;
 }
 
@@ -183,7 +184,8 @@ input:hover {
 
 #create_section,
 #modify_section {
-  width: 50%;
+  margin: auto;
+  width: 90%;
 }
 
 .details {
@@ -220,7 +222,7 @@ ul {
 }
 
 .modify_borders {
-  border: 5px solid var(--accent);
+  border: 5px solid var(--modify);
 }
 
 .dup_borders {
@@ -230,7 +232,7 @@ ul {
 #workshop {
   color: white;
   text-align: center;
-  font-size: 2rem;
+  font-size: 1.4rem;
   text-align: center;
 }
 
@@ -315,4 +317,8 @@ footer {
 
 label {
   color: white;
+}
+
+.red {
+  color: red;
 }

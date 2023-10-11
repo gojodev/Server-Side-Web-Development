@@ -18,6 +18,7 @@
         <nav>
             <a href="index.html"> Home </a>
             <a href="booking.html" id="selected"> Bookings </a>
+            <a href="viewBookings.html"> View Bookings </a>
             <a href="about.html"> About </a>
             <a href="help.html"> Help </a>
         </nav>
@@ -44,7 +45,7 @@
                     <input placeholder="0000 0000 0000 0000" maxlength="19" type="text" id="card_number"><br>
 
                     <label> Expiry Date </label>
-                    <input placeholder="MM/YY" type="tel" id="expiry_date" pattern="\d*" maxlength="7"><br>
+                    <input placeholder="MM/YY" type="tel" id="expiry_date" pattern="\d*" maxlength="7"> <br>
 
                     <label> CVC </label>
                     <input placeholder="123" maxlength="3" type="text" id="cvc"><br>
@@ -65,34 +66,7 @@
                     </form>
                 </div>
         </section>
-
-        <!-- ! limit the amount of bookings to 4 -->
-        <section id="modify_section">
-            <h1 class="booking_title"> Modify &amp; Delete (Click to edit)</h1>
-            <div class="booking_content" id="modify_container">
-                <ul>
-                    <li>
-                        <h3 class="details" id="booking1"> name, date, skill level </h3>
-                    </li>
-
-                    <li>
-                        <h3 class="details" id="booking2"> name, date, skill level </h3>
-                    </li>
-
-                    <li>
-                        <h3 class="details" id="booking3"> name, date, skill level </h3>
-                    </li>
-
-                    <li>
-                        <h3 class="details" id="booking4"> name, date, skill level </h3>
-                    </li>
-                </ul>
-            </div>
-        </section>
     </section>
-    <br>
-    <br>
-    <br>
     <br>
 
     <section id="error_section">
@@ -101,7 +75,6 @@
         </div>
     </section>
 
-    <br>
     <br>
 
     <footer>
@@ -121,4 +94,5 @@
 
     <script src="../javascripts/booking.js"></script>
 </body>
+
 </html>

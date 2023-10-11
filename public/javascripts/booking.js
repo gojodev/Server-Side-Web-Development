@@ -1,8 +1,7 @@
 // ? add a validation file?
-// todo: add a little x button at the top of the summarised booking details in the modify and delete section
 // todo: setup mongoDB
 // todo: make the slash red for the expiry date input
-// todo: add card payments details to booking.html
+
 
 // firebase hosting:channel:deploy preview (at root)
 // ! GLOBAL
@@ -27,24 +26,6 @@ function hide_errors() {
 // ! hide the error seciton for the page lodas
 hide_errors();
 
-function hideBookings() {
-    for (let i = 0; i < 4; i++) {
-        booking_id = `booking${i + 1}`;
-        let isHiden = document.getElementById(booking_id).classList.contains("hide");
-        if (!isHiden) {
-            document.getElementById(booking_id).classList.toggle("hide");
-        }
-    }
-
-    // must reset the active bookings to zero after the purge
-    active_bookings = 0;
-}
-
-
-// ! hides the booking details before the page laods
-hideBookings();
-
-
 /**
  * 
  * @param {JSON} data 
@@ -61,20 +42,6 @@ function createBooking(data, booking_id) {
     let booking = document.getElementById(booking_id);
     booking.innerHTML = details;
     booking.classList.toggle("hide");
-}
-
-// todo: add card details
-function fillInfo(name, email, date) {
-    document.getElementById("name").value = "Emmanuel Koledoye";
-    document.getElementById("email").value = "example@gmail.com";
-    document.getElementById("skill_level").value = "Advanced";
-}
-
-// will added to the functions once the getBookingDetails and validation is working properly
-// ! this will also delete bookings
-function modifyBooking(booking_id) {
-    let booking = document.getElementById(booking_id);
-    booking.classList.toggle("modify_borders");
 }
 
 function getBookingDetails() {
@@ -144,19 +111,6 @@ function autoDate() {
 }
 autoDate();
 
-function deleteAllBookings() {
-    // reset input fields
-    document.getElementById("name").value = "";
-    document.getElementById("email").value = "";
-    autoDate();
-    document.getElementById("skill_level").value = "Beginner";
-
-    // hide booking output/preview
-    hideBookings();
-}
-
-document.getElementById("clear_all").addEventListener("click", deleteAllBookings);
-
 let counter = 0;
 function flashNotice() {
     if (counter == 0) {
@@ -173,24 +127,43 @@ function flashNotice() {
 
 flashNotice();
 
-// add spaces between every 4 numbers for card number input
-const card_number = document.getElementById("card_number");
-card_number.addEventListener("input", () => card_number.value = formatNumber(card_number.value.replaceAll(" ", "")));
+function getCardDetails() {
+    let name = document.getElementById("name").value;
+    let card_number = document.getElementById("card_number");
+    let expiry_date = document.getElementById("expiry_date");
+    let cvc = document.getElementById("cvc").value;
 
-const formatNumber = (number) => number.split("").reduce((seed, next, index) => {
-    if (index !== 0 && !(index % 4)) seed += " ";
-    return seed + next;
-}, "");
 
-// add a slash automically for the expiry date
-const expiry_date = document.getElementById("expiry_date");
-expiry_date.addEventListener("input", () => {
-    let date = expiry_date.value.split("");
+    // add spaces between every 4 numbers for card number input
+    card_number.addEventListener("input", () => {
 
-    if (date.length == 4) {
-        // todo:  make the slash red
-        date.splice(2, 0, "/");
-        date = date.toString().replaceAll(",", "");;
-        expiry_date.value = date.toString();
-    }
-});
+    });
+
+    // add a slash automically for the expiry date
+    expiry_date.addEventListener("input", () => {
+        let date = expiry_date.value.split("");
+
+        if (date.length == 4) {
+            // todo:  make the slash red (possible?)
+            // let slash = `<strong strong class='red'> / </strong>`
+            date.splice(2, 0, "/");
+            date = date.toString().replaceAll(",", "");
+            console.log(date);
+            expiry_date.value = date.toString();
+        }
+    });
+
+    name = name
+
+    let cardData = {
+        "name": name,
+        "card_number": card_number,
+        "expiry_date": expiry_date,
+        "cvc": cvc
+    };
+
+    console.log("Card Data: ", cardData);
+}
+
+
+// getCardDetails();
