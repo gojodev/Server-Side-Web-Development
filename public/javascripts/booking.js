@@ -1,6 +1,7 @@
 // ? add a validation file?
 // todo: setup mongoDB
 // todo: make the slash red for the expiry date input
+// todo: run your website with express instead of using live server (even in development)
 
 
 // firebase hosting:channel:deploy preview (at root)
@@ -135,15 +136,30 @@ function getCardDetails() {
 
 
     // add spaces between every 4 numbers for card number input
+    // ! cause i wanna write my own one
+    let counter = 0;
     card_number.addEventListener("input", () => {
-
+        counter++;
+        let number = card_number.value;
+        let length = number.toString().length;
+        console.log("length: ", length);
+        if (counter % 4 == 0 ) {
+            // convert to array
+            number = number.split("")
+            number.splice(length, 0, " ");
+            number = number.toString().replaceAll(",", "");
+            console.log("number: ", number)
+            card_number.value = number;
+            counter = 0;
+        }
+        
     });
 
     // add a slash automically for the expiry date
     expiry_date.addEventListener("input", () => {
         let date = expiry_date.value.split("");
 
-        if (date.length == 4) {
+        if (date.length == 2) {
             // todo:  make the slash red (possible?)
             // let slash = `<strong strong class='red'> / </strong>`
             date.splice(2, 0, "/");
@@ -162,8 +178,8 @@ function getCardDetails() {
         "cvc": cvc
     };
 
-    console.log("Card Data: ", cardData);
+    // console.log("Card Data: ", cardData);
 }
 
 
-// getCardDetails();
+getCardDetails();

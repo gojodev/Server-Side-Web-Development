@@ -1,3 +1,6 @@
+// todo: remove the limits on the amount of bookings that can be placed
+// todo: pull data from database to carry data across pages and insert it with express + ejs
+
 function hideBookings() {
     for (let i = 0; i < 4; i++) {
         booking_id = `booking${i + 1}`;
@@ -15,7 +18,7 @@ function hideBookings() {
 // ! hides the booking details before the page laods
 hideBookings();
 
-// todo: add card details
+//!  might be easier to use a json object instead of needing a fuck load of parameters
 function fillInfo(name, email, date, skill_level, card_number, expiry_date, cvc) {
     document.getElementById("name").value = name;
     document.getElementById("email").value = email;
@@ -31,16 +34,3 @@ function fillInfo(name, email, date, skill_level, card_number, expiry_date, cvc)
 function modifyBooking() {
 
 }
-
-function deleteAllBookings() {
-    // reset input fields
-    document.getElementById("name").value = "";
-    document.getElementById("email").value = "";
-    autoDate();
-    document.getElementById("skill_level").value = "Beginner";
-
-    // hide booking output/preview
-    hideBookings();
-}
-
-document.getElementById("clear_all").addEventListener("click", deleteAllBookings);
