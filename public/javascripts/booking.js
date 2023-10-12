@@ -3,6 +3,7 @@
 // todo: make the slash red for the expiry date input
 // todo: run your website with express instead of using live server (even in development)
 
+// ! use this ofr making user ids: https://www.npmjs.com/package/nanoid
 
 // firebase hosting:channel:deploy preview (at root)
 // ! GLOBAL
