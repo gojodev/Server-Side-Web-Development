@@ -36,7 +36,7 @@
             <div class="booking_content" id="create_container">
                 <div>
                     <label> Name </label>
-                    <input placeholder="firstName lastName" type="text" id="name"><br>
+                    <input placeholder="firstName lastName" type="text" id="customer"><br>
 
                     <label> Email Address </label>
                     <input placeholder="example@gmail.com" type="text" id="email"><br>
@@ -45,7 +45,7 @@
                     <input placeholder="0000 0000 0000 0000" minlength="19"  maxlength="19" type="text" id="card_number"><br>
 
                     <label> Expiry Date </label>
-                    <input placeholder="MM/YY" type="tel" id="expiry_date" pattern="\d*" maxlength="7"> <br>
+                    <input placeholder="MM/YY" type="text" id="expiry_date" maxlength="5"> <br>
 
                     <label> CVC </label>
                     <input placeholder="123" maxlength="3" type="text" id="cvc"><br>
@@ -53,6 +53,10 @@
 
                     <label> Date for Booking </label>
                     <input type="date" id="date"><br>
+
+                    <label> Time for Booking </label>
+                    <input type="time" id="time"><br>
+
                     <label for="skill_level" id="skill_level_text">SKill level: </label>
                     <select name="skill_level" id="skill_level">
                         <option value="Beginner">Beginner</option>

@@ -17,20 +17,3 @@ function hideBookings() {
 
 // ! hides the booking details before the page laods
 hideBookings();
-
-//!  might be easier to use a json object instead of needing a fuck load of parameters
-function fillInfo(name, email, date, skill_level, card_number, expiry_date, cvc) {
-    document.getElementById("name").value = name;
-    document.getElementById("email").value = email;
-    document.getElementById("skill_level").value = skill_level;
-    document.getElementById("card_number") = card_number;
-    document.getElementById("expiry_date") = expiry_date;
-    document.getElementById("cvc") = cvc;
-    document.getElementById("date") = date;
-}
-
-// will added to the functions once the getBookingDetails and validation is working properly
-// ! this will also delete bookings
-function modifyBooking() {
-
-}
