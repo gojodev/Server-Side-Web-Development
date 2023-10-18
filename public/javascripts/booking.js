@@ -1,5 +1,6 @@
 // ? add a validation file?
 // todo: setup mongoDB
+// todo: look into the difference between MongoDB and mongoose cause they are seperate but is prob better off using MongoDBs version
 
 // ! use this ofr making user ids: https://www.npmjs.com/package/nanoid
 
@@ -55,37 +56,21 @@ let expiry_date = document.getElementById("expiry_date");
 
 // ! CARD DETAILS ------------------
 
-// add spaces between every 4 numbers for card number input
-let counter = 0;
-card_number.addEventListener("input", () => {
-    counter++;
-    let number = card_number.value;
-    let length = number.toString().length;
-    if (counter % 4 == 0 && length < 19) {
-        // convert to array
-        number = number.split("")
-        number.splice(length, 0, " ");
-        number = number.toString().replaceAll(",", "");
-        card_number.value = number;
-        counter = 0;
-    }
-});
+let counter = 1;
 
+card_number.addEventListener("input", () => card_number.value = formatNumber(card_number.value.replaceAll(" ", "")));
+
+const formatNumber = (number) => number.split("").reduce((seed, next, index) => {
+    if (index !== 0 && index % 4 == 0) seed += " ";
+    return seed + next;
+}, "");
 // add a slash automically for the expiry date inbetween the 2nd and 3rd number
-expiry_date.addEventListener("input", () => {
-    let date = expiry_date.value.split("");
+expiry_date.addEventListener("input", () => expiry_date.value = slasher(expiry_date.value.replaceAll(" ")));
 
-
-    if (date.length == 2) {
-        date.splice(2, 0, "/");
-        date = date.toString().replaceAll(",", "");
-        expiry_date.value = date.toString();
-    }
-
-    console.log("date: ", date);
-
-    expiry_date.value = date.toString().replaceAll(",", "");
-});
+const slasher = (number) => number.split("").reduce((seed, next, index) => {
+    if (index % 2 == 0 && index !== 0 && !expiry_date.value.includes("/")) seed += "/"
+    return seed + next;
+}, "")
 
 // ! CARD DETAILS ------------------
 
@@ -137,8 +122,8 @@ function getBookingDetails() {
     let data = {
         "name": customer,
         "email": email,
-        "card_number": card_number,
-        "expiry_date": expiry_date,
+        "card_number": card_number.value,
+        "expiry_date": expiry_date.value,
         "cvc": cvc,
         "time": time,
         "date": input_date,
@@ -148,6 +133,31 @@ function getBookingDetails() {
     console.log(data);
 
 }
+
+
+function autoFill(data) {
+    let id_desc = ["name", "email", "card_number", "expiry_date", "cvc", "time", "date", "skill_level"];
+
+    for (let i = 0; i < id_desc.length; i++) {
+        let element_id = id_desc[i];
+        document.getElementById(data[element_id]) = element_id.value;
+    }
+}
+
+// ! send this to MongoDB later
+let data = {
+    "name": "Emmanuel Koledoye",
+    "email": "example@gmail.com",
+    "card_number": "1111 2222 3333 4444",
+    "expiry_date": "10/28",
+    "cvc": "123",
+    "time": "17:00",
+    "date": "31/10/2023",
+    "skill_level": "Advanced"
+};
+
+autoFill(data);
+
 
 if (isFirstRun) {
     getBookingDetails()

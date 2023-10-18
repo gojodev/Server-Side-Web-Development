@@ -40,7 +40,7 @@ app.use(function (err, req, res, next) {
 });
 
 app.listen(PORT, () => {
-  console.log(`Listening on port: ${PORT}`)
+  console.log(`Listening on localhhost:${PORT}`)
 });
 
 module.exports = app;
