@@ -1,3 +1,3 @@
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://127.0.0.1:27017/BookingDB')
-    .then(() => console.log('Connected!'));
+import { nanoid } from 'nanoid';
+
+console.log( nanoid() );

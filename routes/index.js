@@ -9,10 +9,6 @@ router.get('/index', function (req, res) {
   res.render('index');
 });
 
-router.get('/viewBookings', function (req, res) {
-  res.render('viewBookings');
-});
-
 router.get('/about', function (req, res) {
   res.render('about');
 });

@@ -6,8 +6,15 @@
 
 // firebase hosting:channel:deploy preview (at root)
 
+import { nanoid } from 'nanoid';
+const express = require('express');
+var router = express.Router();
+
 function createBooking(data) {
-    
+    router.get("/viewBookings", function (req, res) {
+        console.log("client side");
+        res.send(data);
+    });
 }
 
 function error_msg(message, element_ids) {
@@ -96,7 +103,7 @@ function getBookingDetails() {
     }
 
     let data = {
-        "id": "",
+        "id": nanoid(),
         "name": name,
         "email": email,
         "card_number": card_number.value,
@@ -114,6 +121,9 @@ function getBookingDetails() {
     else {
         error_msg("Something went wrong :(", ["create_container"]);
     }
+
+    // direct the user to viewBookings.ejs
+    window.location = "localhost:3000/viewBookings";
 }
 
 
