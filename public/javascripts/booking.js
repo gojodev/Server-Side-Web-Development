@@ -6,48 +6,8 @@
 
 // firebase hosting:channel:deploy preview (at root)
 
-import { nanoid } from 'nanoid';
-const mongoose = require('mongoose');
-
-// let data = {
-//     "id": nanoid(),
-//     "name": name,
-//     "email": email,
-//     "card_number": card_number.value,
-//     "expiry_date": expiry_date.value,
-//     "cvc": cvc,
-//     "time": time,
-//     "date": date,
-//     "skill_level": skill_level,
-// };
-
-
-/**
- * 
- * @param {JSON} data 
- */
-async function createBooking(data) {
-    mongoose.connect('mongodb://127.0.0.1:27017/BookingDB')
-        .then(() => console.log('Connected!'));
-
-    const Schema = mongoose.Schema;
-
-    const BookingSchema = new Schema({
-        id: { type: String, set: data.id },
-        name: { type: String, set: data.name },
-        email: { type: String, set: data.email },
-        card_number: { type: String, set: data.card_number },
-        expiry_date: { type: String, set: data.expiry_date },
-        cvc: { type: String, set: data.cvc },
-        time: { type: String, set: data.time },
-        date: { type: Date, set: data.date },
-        skill_level: { type: String, set: data.skill_level },
-    });
-
-    const BookingModel = mongoose.model('bookings', BookingSchema);
+function createBooking(data) {
     
-    const m = new BookingModel();
-    await m.save();
 }
 
 function error_msg(message, element_ids) {
@@ -136,7 +96,7 @@ function getBookingDetails() {
     }
 
     let data = {
-        "id": nanoid(),
+        "id": "",
         "name": name,
         "email": email,
         "card_number": card_number.value,
