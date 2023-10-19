@@ -120,7 +120,7 @@ function getBookingDetails() {
 
     // ! send this to MongoDB later
     let data = {
-        "name": customer,
+        "customer": customer,
         "email": email,
         "card_number": card_number.value,
         "expiry_date": expiry_date.value,
@@ -139,10 +139,14 @@ function autoFill(data) {
     let id_desc = ["name", "email", "card_number", "expiry_date", "cvc", "time", "date", "skill_level"];
 
     for (let i = 0; i < id_desc.length; i++) {
-        let element_id = id_desc[i];
-        document.getElementById(data[element_id]) = element_id.value;
+        let key = id_desc[i];
+        let value = data[key];
+
+        data[key] = value
+        document.getElementById(key).value = value;
+
     }
-}
+}   
 
 // ! send this to MongoDB later
 let data = {
