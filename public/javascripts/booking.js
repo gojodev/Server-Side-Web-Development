@@ -7,9 +7,49 @@
 // firebase hosting:channel:deploy preview (at root)
 
 import { nanoid } from 'nanoid';
-// const nanoid = require("nanoid");
+const mongoose = require('mongoose');
 
-// todo: create error message section
+// let data = {
+//     "id": nanoid(),
+//     "name": name,
+//     "email": email,
+//     "card_number": card_number.value,
+//     "expiry_date": expiry_date.value,
+//     "cvc": cvc,
+//     "time": time,
+//     "date": date,
+//     "skill_level": skill_level,
+// };
+
+
+/**
+ * 
+ * @param {JSON} data 
+ */
+async function createBooking(data) {
+    mongoose.connect('mongodb://127.0.0.1:27017/BookingDB')
+        .then(() => console.log('Connected!'));
+
+    const Schema = mongoose.Schema;
+
+    const BookingSchema = new Schema({
+        id: { type: String, set: data.id },
+        name: { type: String, set: data.name },
+        email: { type: String, set: data.email },
+        card_number: { type: String, set: data.card_number },
+        expiry_date: { type: String, set: data.expiry_date },
+        cvc: { type: String, set: data.cvc },
+        time: { type: String, set: data.time },
+        date: { type: Date, set: data.date },
+        skill_level: { type: String, set: data.skill_level },
+    });
+
+    const BookingModel = mongoose.model('bookings', BookingSchema);
+    
+    const m = new BookingModel();
+    await m.save();
+}
+
 function error_msg(message, element_ids) {
 
     for (let i = 0; i < element_ids.length; i++) {
@@ -27,15 +67,6 @@ function hide_errors() {
 
 // ! hide the error seciton for the page lodas
 hide_errors();
-
-/**
- * 
- * @param {JSON} data 
- */
-function createBooking(data) {
-    console.log(data);
-}
-
 
 // ! GLOBAL
 // the boolean value helpt so check if the function has already run so that the user won't have to see error messages before they can even input anything
@@ -85,7 +116,11 @@ function getBookingDetails() {
     let invalid_email = !(email.includes("@") && email.includes("."));
 
     let isError = false;
-    input_date = input_date.toDateString();
+    // input_date = input_date.toDateString();
+
+    date = new Date(input_date);
+    date.setDate(date.getDate() + 1);
+    date = date.toJSON().slice(0, 10);
 
     if (invalid_name) {
         error_msg("Invalid name input", ["name"]);
@@ -100,24 +135,25 @@ function getBookingDetails() {
         isError = true;
     }
 
-    // ! send this to MongoDB later
     let data = {
+        "id": nanoid(),
         "name": name,
         "email": email,
         "card_number": card_number.value,
         "expiry_date": expiry_date.value,
         "cvc": cvc,
         "time": time,
-        "date": input_date,
+        "date": date,
         "skill_level": skill_level,
-        "id": nanoid(),
     };
 
     if (isError == false) {
         createBooking(data);
+        console.log(data);
     }
-
-    console.log(data);
+    else {
+        error_msg("Something went wrong :(", ["create_container"]);
+    }
 }
 
 
@@ -137,11 +173,11 @@ function autoFill(data) {
 let data = {
     "name": "Emmanuel Koledoye",
     "email": "example@gmail.com",
-    "card_number": "1111 2222 3333 4444",
+    "card_number": "1111 2222 3333 5555",
     "expiry_date": "10/28",
     "cvc": "123",
     "time": "17:00",
-    "date": "31/10/2023",
+    "date": "2023-10-31",
     "skill_level": "Advanced"
 };
 
@@ -154,6 +190,7 @@ if (isFirstRun) {
 
 document.getElementById("submit_button").addEventListener("click", getBookingDetails);
 
+// ! make sure this function doesn't overwite autoFill()
 // this function doesn't need to wait for the submit button to be pressed
 function autoDate() {
     // automically set the current date
@@ -163,7 +200,7 @@ function autoDate() {
     tomorrow = tomorrow.toJSON().slice(0, 10);
     document.getElementById("date").value = tomorrow;
 }
-autoDate();
+// autoDate();
 
 counter = 0;
 function flashNotice() {
