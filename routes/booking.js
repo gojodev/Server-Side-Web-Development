@@ -4,10 +4,10 @@
  */
 
 const express = require('express');
+const { create } = require('lodash');
 var router = express.Router();
-
-// const nanoid = require("nanoid");
 const mongoose = require("mongoose");
+
 
 /**
  * 
@@ -43,14 +43,17 @@ router.get('/booking', function (req, res) {
 });
 
 router.post('/booking', function (req, res) {
-  console.log("----------------- POST request made ----------------- ");
-
-  // todo: grab "data" from database and dynamically insert it into viewbookings
+  console.log("post request made to viewbOOkings");
 });
 
 router.get('/viewBookings', function (req, res) {
   res.render('viewBookings');
-  res.send("server side");
+});
+
+router.post('/viewBookings', function (req, res) {
+  res.render('viewBookings');
+  let data = req.body;
+  createBooking(data);
 });
 
 module.exports = router;

@@ -34,29 +34,31 @@
         <section id="create_section">
             <h1 class="booking_title">Create</h1>
             <div class="booking_content" id="create_container">
-                <form method="post">
+                <form method="post" action="viewBookings">
+                    <input id="id_tag" name="id_tag"></input>
+
                     <label> Name </label>
-                    <input placeholder="firstName lastName" type="text" id="name"><br>
+                    <input placeholder="firstName lastName" type="text" id="name" name="name"><br>
 
                     <label> Email Address </label>
-                    <input placeholder="example@gmail.com" type="text" id="email"><br>
+                    <input placeholder="example@gmail.com" type="text" id="email" name="email"><br>
 
                     <label> Card Number </label>
-                    <input placeholder="0000 0000 0000 0000" minlength="19" maxlength="19" type="text"
-                        id="card_number"><br>
+                    <input placeholder="0000 0000 0000 0000" minlength="19" maxlength="19" type="text" id="card_number"
+                        name="card_number"><br>
 
                     <label> Expiry Date </label>
-                    <input placeholder="MM/YY" type="text" id="expiry_date" maxlength="5"> <br>
+                    <input placeholder="MM/YY" type="text" id="expiry_date" name="expiry_date" maxlength="5"> <br>
 
                     <label> CVC </label>
-                    <input placeholder="123" maxlength="3" type="text" id="cvc"><br>
+                    <input placeholder="123" maxlength="3" type="text" id="cvc" name="cvc"><br>
 
 
                     <label> Date for Booking </label>
-                    <input type="date" id="date"><br>
+                    <input type="date" id="date" name="date"><br>
 
                     <label> Time for Booking </label>
-                    <input type="time" id="time"><br>
+                    <input type="time" id="time" name="time"><br>
 
                     <label for="skill_level" id="skill_level_text">SKill level: </label>
                     <select name="skill_level" id="skill_level">

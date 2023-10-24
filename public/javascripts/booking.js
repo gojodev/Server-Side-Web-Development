@@ -1,24 +1,17 @@
 // ? add a validation file?
-// todo: setup mongoDB + mongoose
 // todo: use fusejs  for the search function ( https://www.fusejs.io/ )
-// todo: use nanoid for userid
-// todo: look into the difference between MongoDB and mongoose cause they are seperate but is prob better off using MongoDBs version
 
 // firebase hosting:channel:deploy preview (at root)
 
-import { nanoid } from 'nanoid';
-const express = require('express');
-var router = express.Router();
+/**
+ * because we aren't using authenication which means there are no login pages every user can access other user's details
+ * so by extension it should be okay to generate IDs on the client side
+ */
 
-function createBooking(data) {
-    router.get("/viewBookings", function (req, res) {
-        console.log("client side");
-        res.send(data);
-    });
-}
+
+import { nanoid } from "nanoid";
 
 function error_msg(message, element_ids) {
-
     for (let i = 0; i < element_ids.length; i++) {
         document.getElementById(element_ids[i]).classList.toggle("error_borders");
     }
@@ -28,12 +21,8 @@ function error_msg(message, element_ids) {
     console.log(message); // ! helps with debugging and will be removed later
 }
 
-function hide_errors() {
-    document.getElementById("error_section").classList.toggle("hide");
-}
-
 // ! hide the error seciton for the page lodas
-hide_errors();
+document.getElementById("error_section").classList.toggle("hide");
 
 // ! GLOBAL
 // the boolean value helpt so check if the function has already run so that the user won't have to see error messages before they can even input anything
@@ -64,13 +53,13 @@ const slasher = (number) => number.split("").reduce((seed, next, index) => {
 // ! CARD DETAILS ------------------
 
 function getBookingDetails() {
+    // express js will collect the values using the name attribute and req.body so they don't need to be collected here
     isFirstRun = true;
     let name = document.getElementById("name").value;
     let email = document.getElementById("email").value;
     let date = document.getElementById("date").value;
-    let cvc = document.getElementById("cvc").value;
-    let time = document.getElementById("time").value;
-    let skill_level = document.getElementById("skill_level").value;
+
+    document.getElementById("id_tag").value = nanoid();
 
     let current_date = new Date();
     let input_date = new Date(date);
@@ -83,7 +72,6 @@ function getBookingDetails() {
     let invalid_email = !(email.includes("@") && email.includes("."));
 
     let isError = false;
-    // input_date = input_date.toDateString();
 
     date = new Date(input_date);
     date.setDate(date.getDate() + 1);
@@ -102,30 +90,13 @@ function getBookingDetails() {
         isError = true;
     }
 
-    let data = {
-        "id": nanoid(),
-        "name": name,
-        "email": email,
-        "card_number": card_number.value,
-        "expiry_date": expiry_date.value,
-        "cvc": cvc,
-        "time": time,
-        "date": date,
-        "skill_level": skill_level,
-    };
-
     if (isError == false) {
-        createBooking(data);
         console.log(data);
     }
     else {
         error_msg("Something went wrong :(", ["create_container"]);
     }
-
-    // direct the user to viewBookings.ejs
-    window.location = "localhost:3000/viewBookings";
 }
-
 
 function autoFill(data) {
     let id_desc = ["name", "email", "card_number", "expiry_date", "cvc", "time", "date", "skill_level"];
@@ -139,7 +110,6 @@ function autoFill(data) {
     }
 }
 
-// ! send this to MongoDB later
 let data = {
     "name": "Emmanuel Koledoye",
     "email": "example@gmail.com",
@@ -151,6 +121,7 @@ let data = {
     "skill_level": "Advanced"
 };
 
+// ! only used for debugging and will be removed at production
 autoFill(data);
 
 

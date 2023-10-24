@@ -316,9 +316,14 @@ footer {
 }
 
 label {
+  display: inline;
   color: white;
 }
 
 .red {
   color: red;
+}
+
+#id_tag {
+  display: none;
 }
