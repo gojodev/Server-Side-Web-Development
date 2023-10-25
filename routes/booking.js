@@ -4,7 +4,6 @@
  */
 
 const express = require('express');
-const { create } = require('lodash');
 var router = express.Router();
 const mongoose = require("mongoose");
 
@@ -13,7 +12,7 @@ const mongoose = require("mongoose");
  * 
  * @param {JSON} data 
  */
-async function createBooking(data) {
+async function uploadBookings(data) {
   await mongoose.connect('mongodb://127.0.0.1:27017/BookingDB')
     .then(() => console.log('Connected!'))
     .catch(() => console.log("Not Connected"));
@@ -38,13 +37,14 @@ async function createBooking(data) {
   await m.save();
 }
 
+// will have to use javascript to create html and i don't want there to be a limit on bookings
+function displayBookings(data) {
+
+}
+
 router.get('/booking', function (req, res) {
   res.render('booking');
-});
-
-router.post('/booking', function (req, res) {
-  console.log("post request made to viewbOOkings");
-});
+}); 
 
 router.get('/viewBookings', function (req, res) {
   res.render('viewBookings');
@@ -53,7 +53,11 @@ router.get('/viewBookings', function (req, res) {
 router.post('/viewBookings', function (req, res) {
   res.render('viewBookings');
   let data = req.body;
-  createBooking(data);
+  // createBooking(data);
+  console.log(data);
 });
+
+
+
 
 module.exports = router;
