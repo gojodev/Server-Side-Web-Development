@@ -12,7 +12,10 @@
         "allowImportExportEverywhere": true
     },
     "rules": {
-        "semi": ["error", "always"],
+        "semi": [
+            "error",
+            "always"
+        ],
         "no-unused-vars": "warn"
     }
 }

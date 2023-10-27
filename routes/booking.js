@@ -1,7 +1,4 @@
-/**
- * you're trying to use mongoose and express from here
- * figure out how to collect the form data from booking.ejs
- */
+// todo: use fusejs  for the search function ( https://www.fusejs.io/ )
 
 const express = require('express');
 var router = express.Router();
@@ -37,14 +34,24 @@ async function uploadBookings(data) {
   await m.save();
 }
 
-// will have to use javascript to create html and i don't want there to be a limit on bookings
+// todo: create html from js
 function displayBookings(data) {
+  console.log("id: ", data.id_tag);
 
+  if (typeof document !== 'undefined') {
+    const created_li = document.createElement("li");
+    const node = document.createTextNode(data.id_tag);
+    created_li.appendChild(node);
+
+    const ul_elem = document.getElementById("ul");
+    ul_elem.value = "test";
+    ul_elem.inert(created_li);
+  }
 }
 
 router.get('/booking', function (req, res) {
   res.render('booking');
-}); 
+});
 
 router.get('/viewBookings', function (req, res) {
   res.render('viewBookings');
@@ -54,7 +61,7 @@ router.post('/viewBookings', function (req, res) {
   res.render('viewBookings');
   let data = req.body;
   // createBooking(data);
-  console.log(data);
+  displayBookings(data);
 });
 
 
