@@ -10,28 +10,33 @@ const mongoose = require("mongoose");
  * @param {JSON} data 
  */
 async function uploadBookings(data) {
-  await mongoose.connect('mongodb://127.0.0.1:27017/BookingDB')
-    .then(() => console.log('Connected!'))
-    .catch(() => console.log("Not Connected"));
+  try {
+    await mongoose.connect('mongodb://127.0.0.1:27017/BookingDB');
+    console.log('Connected!');
 
-  const Schema = mongoose.Schema;
+    const Schema = mongoose.Schema;
 
-  const BookingSchema = new Schema({
-    id: { type: String, set: data.id },
-    name: { type: String, set: data.name },
-    email: { type: String, set: data.email },
-    card_number: { type: String, set: data.card_number },
-    expiry_date: { type: String, set: data.expiry_date },
-    cvc: { type: String, set: data.cvc },
-    time: { type: String, set: data.time },
-    date: { type: Date, set: data.date },
-    skill_level: { type: String, set: data.skill_level },
-  });
+    const BookingSchema = new Schema({
+      // mongoose setters erquire a function that takes a value as an argument
+      // the defined function as setter is responsible for setting the value
+      id_tag: { type: String, set: (value) => data.id_tag },
+      name: { type: String, set: (value) => data.name },
+      email: { type: String, set: (value) => data.email },
+      card_number: { type: String, set: (value) => data.card_number },
+      expiry_date: { type: String, set: (value) => data.expiry_date },
+      cvc: { type: String, set: (value) => data.cvc },
+      time: { type: String, set: (value) => data.time },
+      date: { type: Date, set: (value) => data.date },
+      skill_level: { type: String, set: (value) => data.skill_level },
+    });
 
-  const BookingModel = mongoose.model('bookings', BookingSchema);
+    const BookingModel = mongoose.model('BookingDB', BookingSchema);
 
-  const m = new BookingModel();
-  await m.save();
+    const instance = new BookingModel(data);
+    await instance.save();
+  } catch (error) {
+    console.error('Connection or save error:', error);
+  }
 }
 
 // todo: create html from js
@@ -58,10 +63,8 @@ router.get('/viewBookings', function (req, res) {
 });
 
 router.post('/viewBookings', function (req, res) {
+  uploadBookings(req.body);
   res.render('viewBookings');
-  let data = req.body;
-  // createBooking(data);
-  displayBookings(data);
 });
 
 
