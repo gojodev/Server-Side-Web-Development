@@ -1,3 +1,4 @@
+// the only reason why this files exists so that I can use nanoID module in booking.js because it is a ES6 module not a NODEJS module
 require("esbuild").build({
     // the entry point file described above
     entryPoints: ["./public/javascripts/booking.js"],

@@ -327,3 +327,23 @@ label {
 #id_tag {
   display: none;
 }
+
+table, th, td {
+  border: 1px solid white; 
+  margin: auto;
+  padding: 10px;
+}
+
+#booking_details {
+  border: 5px solid white;
+  border-radius: 30px;
+  padding: 5px;
+  background: black;
+  color: white;
+  margin: auto;
+  text-align: center;
+}
+
+.key {
+  color: var(--accent);
+}

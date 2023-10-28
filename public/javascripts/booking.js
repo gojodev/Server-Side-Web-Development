@@ -85,10 +85,7 @@ function getBookingDetails() {
         isError = true;
     }
 
-    if (isError == false) {
-        console.log(data);
-    }
-    else {
+    if (isError) {
         error_msg("Something went wrong :(", ["create_container"]);
     }
 }

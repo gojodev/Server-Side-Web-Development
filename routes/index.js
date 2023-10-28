@@ -17,9 +17,8 @@ router.get('/help', function (req, res) {
   res.render('help');
 });
 
-router.get('/viewBookings', function (req, res) {
-  res.render('viewBookings');
+router.get('/booking', function (req, res) {
+  res.render('booking');
 });
-
 
 module.exports = router;
