@@ -38,30 +38,29 @@
                     <input id="id_tag" name="id_tag"></input>
 
                     <label> Name </label>
-                    <input placeholder="firstName lastName" type="text" id="name" name="name"><br>
+                    <input placeholder="firstName lastName" type="text" id="name" name="name" required><br>
 
                     <label> Email Address </label>
-                    <input placeholder="example@gmail.com" type="text" id="email" name="email"><br>
+                    <input placeholder="example@gmail.com" type="text" id="email" name="email" required><br>
 
                     <label> Card Number </label>
-                    <input placeholder="0000 0000 0000 0000" minlength="19" maxlength="19" type="text" id="card_number"
-                        name="card_number"><br>
+                    <input placeholder="0000 0000 0000 0000" minlength="19" maxlength="19" type="text" id="card_number" name="card_number" required><br>
 
                     <label> Expiry Date </label>
-                    <input placeholder="MM/YY" type="text" id="expiry_date" name="expiry_date" maxlength="5"> <br>
+                    <input placeholder="MM/YY" type="text" id="expiry_date" name="expiry_date" maxlength="5" required><br>
 
                     <label> CVC </label>
-                    <input placeholder="123" maxlength="3" type="text" id="cvc" name="cvc"><br>
+                    <input placeholder="123" maxlength="3" type="text" id="cvc" name="cvc" required><br>
 
 
                     <label> Date for Booking </label>
-                    <input type="date" id="date" name="date"><br>
+                    <input type="date" id="date" name="date" required><br>
 
                     <label> Time for Booking </label>
-                    <input type="time" id="time" name="time"><br>
+                    <input type="time" id="time" name="time" required><br>
 
                     <label for="skill_level" id="skill_level_text">SKill level: </label>
-                    <select name="skill_level" id="skill_level">
+                    <select name="skill_level" id="skill_level" required>
                         <option value="Beginner">Beginner</option>
                         <option value="Intermediate">Intermediate</option>
                         <option value="Advanced">Advanced</option>

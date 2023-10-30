@@ -6,6 +6,7 @@ var router = express.Router();
 const mongoose = require("mongoose");
 
 async function GetBookings(data) {
+    let isFirstRun = false;
     // upload to the database
     try {
         await mongoose.connect('mongodb://127.0.0.1:27017/BookingDB');
@@ -27,14 +28,27 @@ async function GetBookings(data) {
             skill_level: { type: String, set: (value) => data.skill_level },
         });
 
-        const BookingModel = mongoose.model('BookingDB', BookingSchema);
+        let BookingModel;
+        if (isFirstRun == false) {
+            BookingModel = mongoose.model('BookingDB', BookingSchema);
+            isFirstRun = true;
+        }
 
         const instance = new BookingModel(data);
         await instance.save();
 
-        const bookings = await BookingModel.find({}); // Fetch all bookings from BookingDB (it's an array of JSONs)
+        const BookingPromise = await BookingModel.find({}); // Fetch all bookings from BookingDB (it's an array of JSONs)
 
-        return bookings;
+        let BookingData = Promise.resolve(BookingPromise);
+
+        try {
+            const bookingsResolved = await BookingData;
+            console.log("------------bookingsResolved: ", bookingsResolved);
+            return bookingsResolved;
+        } catch (err) {
+            console.log(err);
+        }
+
     } catch (error) {
         console.error('Connection or save error:', error);
     } finally {
@@ -43,25 +57,14 @@ async function GetBookings(data) {
 }
 
 router.get('/viewBookings', function (req, res) {
-    let data = req.body;
-    let bookings = GetBookings(data);
+    let bookings = GetBookings(req.body);
     res.render('viewBookings', { bookings });
 
 });
 
 router.post('/viewBookings', function (req, res) {
-    res.render('viewBookings');
+    let bookings = GetBookings(req.body);
+    res.render('viewBookings', { bookings });
 });
 
-
-// router.get("/:id", (req, res) => {
-//     res.json({ message: `your id is ${req.params.id}` })
-// })
-
 module.exports = router;
-
-
-/**
- * to delete all bookings:
-    BookingModel.deleteMany({});
- */
