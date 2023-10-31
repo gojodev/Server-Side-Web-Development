@@ -102,21 +102,6 @@ function autoFill(data) {
     }
 }
 
-let data = {
-    "name": "Emmanuel Koledoye",
-    "email": "example@gmail.com",
-    "card_number": "1111 2222 3333 5555",
-    "expiry_date": "10/28",
-    "cvc": "123",
-    "time": "17:00",
-    "date": "2023-10-31",
-    "skill_level": "Advanced"
-};
-
-// ! only used for debugging and will be removed at production
-autoFill(data);
-
-
 if (isFirstRun) {
     getBookingDetails();
 }
@@ -134,6 +119,21 @@ function autoDate() {
     document.getElementById("date").value = tomorrow;
 }
 // autoDate();
+
+let data = {
+    "name": "Emmanuel Koledoye",
+    "email": "example@gmail.com",
+    "card_number": "1111 2222 3333 5555",
+    "expiry_date": "10/28",
+    "cvc": "123",
+    "time": "17:00",
+    "date": autoDate(),
+    "skill_level": "Advanced"
+};
+
+// ! only used for debugging and will be removed at production
+autoFill(data);
+
 
 counter = 0;
 function flashNotice() {
