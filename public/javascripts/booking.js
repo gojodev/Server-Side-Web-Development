@@ -116,7 +116,8 @@ function autoDate() {
     let tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
     tomorrow = tomorrow.toJSON().slice(0, 10);
-    document.getElementById("date").value = tomorrow;
+    // document.getElementById("date").value = tomorrow;
+    return tomorrow;
 }
 // autoDate();
 

@@ -1,6 +1,14 @@
 var express = require('express');
 var router = express.Router();
 const mongoose = require("mongoose");
+const ejs = require("ejs");
+
+async function connect() {
+    await mongoose.connect('mongodb://127.0.0.1:27017/BookingDB');
+    console.log('Connected!');
+}
+
+connect();
 
 // Define the Mongoose model outside of the function so i don't overwrite it when i call upon it multiple times
 const BookingSchema = new mongoose.Schema({
@@ -18,52 +26,30 @@ const BookingSchema = new mongoose.Schema({
 
 const BookingModel = mongoose.model('BookingDB', BookingSchema);
 
-async function UpdateBookings(data) {
-    try {
-        await mongoose.connect('mongodb://127.0.0.1:27017/BookingDB');
-        console.log('Connected!');
-
-        // Create a new instance of the model and save it
-        const instance = new BookingModel(data);
-        await instance.save();
-
-    } catch (error) {
-        console.error('Connection or save error:', error);
-    }
-}
-
-async function GetBookings() {
-    try {
-        const bookings = await BookingModel.find({});
-        return bookings;
-    } catch (err) {
-        console.log(err);
-        throw err; // Re-throw the error to indicate that an error occurred
-    }
-}
-
 
 router.get('/viewBookings', async function (req, res) {
-    try {
-        let bookings = await GetBookings();
-        console.log("bookings: ", bookings);
-        res.render('viewBookings');
-    }
-    catch (err) {
-        console.log(err);
-        res.status(500).send(err);
-    }
+    const bookings = await BookingModel.find({});
+    console.log("GET bookings: ", bookings);
+    ejs.renderFile('viewBookings', { bookings: bookings});
 });
 
 router.post('/viewBookings', async function (req, res) {
-    try {
-        let bookings = await UpdateBookings(req.body);
-        res.render('viewBookings', { bookings });
-    } catch (err) {
-        console.error(err);
-        // status 500 is a generic error response and is only included out out of best practice
-        res.status(500).send(err);
-    }
+    const instance = new BookingModel(req.body);
+    await instance.save();
+    ejs.renderFile('viewBookings');
 });
 
 module.exports = router;
+
+/**
+ * current issues:
+ * page is slow when loading both get and post requests
+ * you were able to show the id_tag ONCE but you can't handle an array of JSONs
+ * even if you can insert the array of json bookings you still need a way to render tjem automically
+ * you don't know how to use js to create SEPERATE html tables for each id_tag 
+ * (i say id_tag and not user because i'll allow multiple bookings from the same person)
+ * 
+ * In short:
+ * - fix speed
+ * - display booking info
+ */
