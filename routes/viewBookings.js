@@ -3,16 +3,19 @@ var router = express.Router();
 const mongoose = require("mongoose");
 const ejs = require("ejs");
 
-async function connect() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/BookingDB');
-    console.log('Connected!');
-}
+// Establish the MongoDB connection only once when your application starts.
+mongoose.connect('mongodb://127.0.0.1:27017/BookingDB', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+    .then(() => {
+        console.log('Connected to MongoDB!');
+    })
+    .catch((err) => {
+        console.error('Error connecting to MongoDB:', err);
+    });
 
-connect();
-
-// Define the Mongoose model outside of the function so i don't overwrite it when i call upon it multiple times
 const BookingSchema = new mongoose.Schema({
-    // Define your schema fields here
     id_tag: String,
     name: String,
     email: String,
@@ -24,32 +27,33 @@ const BookingSchema = new mongoose.Schema({
     skill_level: String,
 });
 
-const BookingModel = mongoose.model('BookingDB', BookingSchema);
-
+const BookingModel = mongoose.model('Booking', BookingSchema);
 
 router.get('/viewBookings', async function (req, res) {
-    const bookings = await BookingModel.find({});
-    console.log("GET bookings: ", bookings);
-    ejs.renderFile('viewBookings', { bookings: bookings});
+    try {
+        const booking = await BookingModel.find({});
+
+        let reversedBookings = booking.slice().reverse();
+
+        // Assuming you have an EJS template 'viewBookings.ejs' to render the data.
+        res.render('viewBookings', { bookings: reversedBookings });
+    } catch (error) {
+        console.error('Error fetching bookings:', error);
+        res.status(500).send('Error fetching bookings');
+    }
 });
 
+
 router.post('/viewBookings', async function (req, res) {
-    const instance = new BookingModel(req.body);
-    await instance.save();
-    ejs.renderFile('viewBookings');
+    try {
+        const instance = new BookingModel(req.body);
+        await instance.save();
+        // Redirect to the view bookings page after saving.
+        res.redirect('/viewBookings');
+    } catch (error) {
+        console.error('Error saving booking:', error);
+        res.status(500).send('Error saving booking');
+    }
 });
 
 module.exports = router;
-
-/**
- * current issues:
- * page is slow when loading both get and post requests
- * you were able to show the id_tag ONCE but you can't handle an array of JSONs
- * even if you can insert the array of json bookings you still need a way to render tjem automically
- * you don't know how to use js to create SEPERATE html tables for each id_tag 
- * (i say id_tag and not user because i'll allow multiple bookings from the same person)
- * 
- * In short:
- * - fix speed
- * - display booking info
- */

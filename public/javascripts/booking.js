@@ -134,20 +134,3 @@ let data = {
 
 // ! only used for debugging and will be removed at production
 autoFill(data);
-
-
-counter = 0;
-function flashNotice() {
-    if (counter == 0) {
-        document.getElementById("notice").classList.toggle("flash");
-        counter = 1;
-    }
-    else {
-        document.getElementById("notice").classList.toggle("not-flash");
-        counter = 0;
-    }
-
-    setTimeout(flashNotice, 700);
-}
-
-flashNotice();

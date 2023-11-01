@@ -301,17 +301,22 @@ footer {
   border-radius: 5px;
   margin: auto;
   transition: 0.2s;
+  animation-name: flashingAnimation;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+  transition: 0.2s;
 }
 
-.not-flash,
-.default {
-  color: white;
-  background: var(--accent);
-}
+@keyframes flashingAnimation {
+  from {
+    color: white;
+    background: var(--accent);
+  }
 
-.flash {
-  color: var(--accent);
-  background: white;
+  to {
+    color: var(--accent);
+    background: white;
+  }
 }
 
 label {
@@ -327,8 +332,10 @@ label {
   display: none;
 }
 
-table, th, td {
-  border: 1px solid white; 
+table,
+th,
+td {
+  border: 1px solid white;
   margin: auto;
   padding: 10px;
 }
