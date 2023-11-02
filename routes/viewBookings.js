@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 const mongoose = require("mongoose");
-const ejs = require("ejs");
 
 // Establish the MongoDB connection only once when your application starts.
 mongoose.connect('mongodb://127.0.0.1:27017/BookingDB', {
@@ -17,6 +16,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/BookingDB', {
 
 const BookingSchema = new mongoose.Schema({
     id_tag: String,
+    when_booked: String,
     name: String,
     email: String,
     card_number: String,

@@ -25,50 +25,89 @@
     </section>
 
     <br>
-    <div id="notice" class="default">
-        Please reserve your bookings at least 1 day in advance.
+    <div id="booking_buttons_container">
+        <!-- Doesn't need functionaility for phase 1 
+        to select which bookings you wante changed first click the modify button 
+        and then each booking row will be highlighted and when you click on a row
+        you'll be taken to a similiar page like bookings.ejs and i'll replace
+        "submit" wiith "modify"
+        -->
+        <div class="booking_buttons modify">
+            Modify
+        </div>
+
+        <div class="booking_buttons deleteSome">
+            Delete
+        </div>
+
+        <!-- Doesn't need functionaility for phase 1
+        you in the form action you'd need to create another page
+        and in your viewBookings.js (aerver side ofc) you'd need 
+        to create a post request to that page so you can 
+        connnect to mongoDB from there using Mongoose
+        -->
+        <div class="booking_buttons deleteAll" id="delete">
+            Delete All
+        </div>
     </div>
-
     <br>
-    <div id="booking_details">
-        <table>
-            <tr>
-                <th class="key"> ID </th>
-                <th class="key"> Name</th>
-                <th class="key"> Email </th>
-                <th class="key"> Card Number </th>
-                <th class="key"> Expiry Date</th>
-                <th class="key"> CVC </th>
-                <th class="key"> Time </th>
-                <th class="key"> Date </th>
-                <th class="key"> skill_level </th>
-            </tr>
 
-            <!-- because we don't need user authenication or in other words a user and password there's no need to hide the the financial information 
+    <table id="booking_details">
+        <tr>
+            <th class="key"> ID </th>
+            <th class="key"> When Booked</th>
+            <th class="key"> Name</th>
+            <th class="key"> Email </th>
+            <th class="key"> Card Number </th>
+            <th class="key"> Expiry Date</th>
+            <th class="key"> CVC </th>
+            <th class="key"> Time </th>
+            <th class="key"> Date </th>
+            <th class="key"> skill_level </th>
+        </tr>
+
+        <!-- because we don't need user authenication or in other words a user and password there's no need to hide the the financial information 
                 because security is not a prioty as it is not required due to hiding finanical information not being directly instrcuted 
                 this same point extends to the database being on the localhost and not in a secure online server
             -->
-            <% bookings.forEach(booking => { %>
-                <tr>
-                  <td><%= booking.id_tag %></td>
-                  <td><%= booking.name %></td>
-                  <td><%= booking.email %></td>
-                  <td><%= booking.card_number %></td>
-                  <td><%= booking.expiry_date %></td>
-                  <td><%= booking.cvc %></td>
-                  <td><%= booking.time %></td>
-                  <td><%= booking.date %></td>
-                  <td><%= booking.skill_level %></td>
-                </tr>
-              <% }); %>
-        </table>
+        <% bookings.forEach(booking=> { %>
+            <tr>
+                <td>
+                    <%= booking.id_tag %>
+                </td>
+                <td>
+                    <%= booking.when_booked %>
+                </td>
+                <td>
+                    <%= booking.name %>
+                </td>
+                <td>
+                    <%= booking.email %>
+                </td>
+                <td>
+                    <%= booking.card_number %>
+                </td>
+                <td>
+                    <%= booking.expiry_date %>
+                </td>
+                <td>
+                    <%= booking.cvc %>
+                </td>
+                <td>
+                    <%= booking.time %>
+                </td>
+                <td>
+                    <%= booking.date %>
+                </td>
+                <td>
+                    <%= booking.skill_level %>
+                </td>
+            </tr>
+            <% }); %>
+    </table>
 
-        <ul id="ul">
-        </ul>
-    </div>
     <br>
-
-
+    
     <footer>
         <br>
         <a href="https://ko-fi.com/gojodev" target="_blank">

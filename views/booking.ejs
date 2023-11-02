@@ -25,17 +25,17 @@
     </section>
 
     <br>
-    <div id="notice" class="default">
+    <div id="notice">
         Please reserve your bookings at least 1 day in advance.
     </div>
-
-    <!-- put all the bookings info onto one page to keep things simple -->
+    
     <section id="booking_container">
         <section id="create_section">
             <h1 class="booking_title">Create</h1>
             <div class="booking_content" id="create_container">
                 <form method="post" action="viewBookings">
-                    <input id="id_tag" name="id_tag"></input>
+                    <input class="hide_input" id="id_tag" name="id_tag"></input>
+                    <input class="hide_input" id="when_booked" name="when_booked"></input>
 
                     <label> Name </label>
                     <input placeholder="firstName lastName" type="text" id="name" name="name" required><br>
