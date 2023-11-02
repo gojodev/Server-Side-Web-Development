@@ -4,6 +4,7 @@
  * because we aren't using authenication which means there are no login pages every user can access other user's details
  * so by extension it should be okay to generate IDs on the client side
  */
+
 import { nanoid } from "nanoid";
 
 function error_msg(message, element_ids) {
