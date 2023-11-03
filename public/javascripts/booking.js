@@ -40,7 +40,6 @@ const formatNumber = (number) => number.split("").reduce((seed, next, index) => 
 expiry_date.addEventListener("input", () => expiry_date.value = slasher(expiry_date.value.replaceAll(" ")));
 
 const slasher = (number) => number.split("").reduce((seed, next, index) => {
-    let date = new Date();
     var input_expiry_date = expiry_date.value;
 
     if (index % 2 == 0 && index !== 0 && !input_expiry_date.includes("/")) {
@@ -141,16 +140,16 @@ function autoDate() {
 }
 autoDate();
 
-// let data = {
-//     "name": "Emmanuel Koledoye",
-//     "email": "example@gmail.com",
-//     "card_number": "1111 2222 3333 5555",
-//     "expiry_date": "10/28",
-//     "cvc": "123",
-//     "time": "17:00",
-//     "date": autoDate(),
-//     "skill_level": "Advanced"
-// };
+let data = {
+    "name": "Emmanuel Koledoye",
+    "email": "example@gmail.com",
+    "card_number": "1111 2222 3333 5555",
+    "expiry_date": "10/28",
+    "cvc": "123",
+    "time": "17:00",
+    "date": autoDate(),
+    "skill_level": "Advanced"
+};
 
 // ! only used for debugging
 // autoFill(data);
