@@ -30,5 +30,5 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "```\r phase 1\r ├─ .eslintrc.json\r ├─ .firebaserc\r ├─ app.js\r ├─ bin\r │  └─ www\r ├─ esbuild.config.js\r ├─ firebase.json\r ├─ package-lock.json\r ├─ package.json\r ├─ public\r │  ├─ images\r │  │  ├─ css3.png\r │  │  ├─ GitHub.webp\r │  │  ├─ html.png\r │  │  ├─ javascript.png\r │  │  ├─ kofi.webp\r │  │  ├─ LinkedIn.webp\r │  │  ├─ Nexus_Logo.webp\r │  │  ├─ programming_imagejpg.jpg\r │  │  └─ python.jpg\r │  ├─ javascripts\r │  │  ├─ booking.js\r │  │  ├─ bundle.js\r │  │  └─ test.js\r │  ├─ pages\r │  └─ stylesheets\r │     └─ style.css\r ├─ README.md\r ├─ routes\r │  ├─ index.js\r │  └─ viewBookings.js\r └─ views\r    ├─ 404.ejs\r    ├─ about.ejs\r    ├─ booking.ejs\r    ├─ error.ejs\r    ├─ help.ejs\r    ├─ index.ejs\r    └─ viewBookings.ejs"
 }
