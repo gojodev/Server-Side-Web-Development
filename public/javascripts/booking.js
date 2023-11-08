@@ -5,8 +5,6 @@
  * so by extension it should be okay to generate IDs on the client side
  */
 
-import { nanoid } from "nanoid";
-
 function error_msg(message, element_ids) {
     for (let i = 0; i < element_ids.length; i++) {
         document.getElementById(element_ids[i]).classList.toggle("error_borders");
@@ -36,6 +34,7 @@ const formatNumber = (number) => number.split("").reduce((seed, next, index) => 
     if (index !== 0 && index % 4 == 0) seed += " ";
     return seed + next;
 }, "");
+
 // add a slash automically for the expiry date inbetween the 2nd and 3rd number
 expiry_date.addEventListener("input", () => expiry_date.value = slasher(expiry_date.value.replaceAll(" ")));
 
@@ -70,8 +69,6 @@ function getBookingDetails() {
     let name = document.getElementById("name").value;
     let email = document.getElementById("email").value;
     let date = document.getElementById("date").value;
-
-    document.getElementById("id_tag").value = nanoid();
 
     let current_date = new Date();
     let input_date = new Date(date);

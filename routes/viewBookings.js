@@ -15,7 +15,6 @@ mongoose.connect('mongodb://127.0.0.1:27017/BookingDB', {
     });
 
 const BookingSchema = new mongoose.Schema({
-    id_tag: String,
     when_booked: String,
     name: String,
     email: String,

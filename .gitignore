@@ -67,3 +67,6 @@ node_modules/
 
 #Git
 .git
+
+# My todo list
+.todo.md

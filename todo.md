@@ -1,1 +1,0 @@
-- [] remove the nanoID ES6 module because you can juse use _id and keep everything with node
