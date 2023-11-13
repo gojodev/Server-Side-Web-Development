@@ -26,27 +26,14 @@
 
     <br>
     <div id="booking_buttons_container">
-        <!-- Doesn't need functionaility for phase 1 
-        to select which bookings you wante changed first click the modify button 
-        and then each booking row will be highlighted and when you click on a row
-        you'll be taken to a similiar page like bookings.ejs and i'll replace
-        "submit" wiith "modify"
-        -->
         <div class="booking_buttons modify">
             Modify
         </div>
 
-        <input class="booking_buttons deleteSome" type="submit">
-        Delete
-        </input>
+        <div class="booking_buttons deleteSome" id="delete">
+            Delete Some
+        </div>
 
-
-        <!-- Doesn't need functionaility for phase 1
-        you in the form action you'd need to create another page
-        and in your viewBookings.js (aerver side ofc) you'd need 
-        to create a post request to that page so you can 
-        connnect to mongoDB from there using Mongoose
-        -->
         <div class="booking_buttons deleteAll" id="delete">
             Delete All
         </div>
@@ -72,7 +59,7 @@
                 this same point extends to the database being on the localhost and not in a secure online server
             -->
         <% bookings.forEach(booking=> { %>
-            <tr>
+            <tr class="tr-hover" onclick="logBookingInfo(this)">
                 <td>
                     <%= booking._id %>
                 </td>

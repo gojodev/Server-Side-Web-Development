@@ -159,6 +159,18 @@ input:hover {
   border-radius: 10px;
 }
 
+.modify_button {
+  color: white;
+  background-color: var(--modify);
+  transition: 0.2s;
+}
+
+.modify_button:hover {
+  color: var(--modify);
+  background: white;
+  border-radius: 10px;
+}
+
 #clear_all {
   color: white;
   background-color: red;
@@ -368,8 +380,11 @@ tr:nth-child(even) {
 }
 
 #booking_buttons_container {
+  /* gap: 150px; */
   display: flex;
-  gap: 150px;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
   margin: auto;
 }
 
@@ -426,4 +441,51 @@ tr:nth-child(even) {
 
 #learn:hover {
   background-color: var(--section2);
+}
+
+.tr-hover {
+  opacity: 0.8;
+  transition: 0.2s;
+}
+
+.tr-hover:hover,
+.tr-hover.active {
+  opacity: 1;
+  background-color: var(--accent);
+}
+
+.booking_buttons.modify {
+  color: white;
+  background-color: var(--modify);
+  transition: 0.2s;
+}
+
+.booking_buttons.modify:hover {
+  color: var(--modify);
+  background: white;
+  border-radius: 10px;
+}
+
+.booking_buttons.deleteSome {
+  color: white;
+  background-color: var(--accent);
+  transition: 0.2s;
+}
+
+.booking_buttons.deleteSome:hover {
+  background-color: white;
+  color: var(--accent);
+  border-radius: 10px;
+}
+
+.booking_buttons.deleteAll {
+  color: white;
+  background-color: red;
+  transition: 0.2s;
+}
+
+.booking_buttons.deleteAll:hover {
+  background-color: white;
+  color: red;
+  border-radius: 10px;
 }
