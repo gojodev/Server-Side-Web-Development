@@ -28,7 +28,10 @@ var expiry_date = document.getElementById("expiry_date");
 
 // ! CARD DETAILS ------------------
 
-card_number.addEventListener("input", () => card_number.value = formatNumber(card_number.value.replaceAll(" ", "")));
+card_number.addEventListener("input", () => {
+    const cleanedValue = card_number.value.replace(/\D/g, ''); // Remove non-numeric characters
+    card_number.value = formatNumber(cleanedValue);
+});
 
 const formatNumber = (number) => number.split("").reduce((seed, next, index) => {
     if (index !== 0 && index % 4 == 0) seed += " ";
@@ -132,21 +135,21 @@ function autoDate() {
     let tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
     tomorrow = tomorrow.toJSON().slice(0, 10);
-    // document.getElementById("date").value = tomorrow;
-    return tomorrow;
+    document.getElementById("date").value = tomorrow;
+    // return tomorrow;
 }
 autoDate();
 
-let data = {
-    "name": "Emmanuel Koledoye",
-    "email": "example@gmail.com",
-    "card_number": "1111 2222 3333 5555",
-    "expiry_date": "10/28",
-    "cvc": "123",
-    "time": "17:00",
-    "date": autoDate(),
-    "skill_level": "Advanced"
-};
+// let data = {
+//     "name": "Emmanuel Koledoye",
+//     "email": "example@gmail.com",
+//     "card_number": "1111 2222 3333 5555",
+//     "expiry_date": "10/28",
+//     "cvc": "123",
+//     "time": "17:00",
+//     "date": autoDate(),
+//     "skill_level": "Advanced"
+// };
 
 // ! only used for debugging
-autoFill(data);
+// autoFill(data);
