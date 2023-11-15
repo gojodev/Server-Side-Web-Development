@@ -7,14 +7,26 @@ function toggleButtonStyle(button, styleName) {
     button.classList.add(styleName);
 }
 
+// todo: allow the hover stye to be changed on the button clicked and the default one show first
 function logBookingInfo(row) {
     // Remove the 'active' class from all rows
     var rows = document.querySelectorAll('.tr-hover');
     rows.forEach(r => r.classList.remove('active'));
+}
 
-    // Add the 'active' class to the clicked row
-    row.classList.add('active');
+document.getElementById("modify").addEventListener("click", () => {
+    console.log("modify pressed");
+});
 
+document.getElementById("deleteSome").addEventListener("click", () => {
+    console.log("deleteSome pressed");
+});
+
+document.getElementById("deleteAll").addEventListener("click", () => {
+    console.log("deleteAll pressed");
+});
+
+function logBookingInfo(row) {
     // Create a JSON object with the information from the selected row
     var bookingInfo = {
         id: row.cells[0].innerText,

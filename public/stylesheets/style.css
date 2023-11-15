@@ -448,43 +448,45 @@ tr:nth-child(even) {
   transition: 0.2s;
 }
 
-.tr-hover:hover,
-.tr-hover.active {
+/* will be the default color for hovering over a row before anything
+is selected */
+.tr-hover:hover {
   opacity: 1;
-  background-color: var(--accent);
+  color: white;
+  background-color: black;
 }
 
-.booking_buttons.modify {
+.modify {
   color: white;
   background-color: var(--modify);
   transition: 0.2s;
 }
 
-.booking_buttons.modify:hover {
+.modify:hover {
   color: var(--modify);
   background: white;
   border-radius: 10px;
 }
 
-.booking_buttons.deleteSome {
+.deleteSome {
   color: white;
   background-color: var(--accent);
   transition: 0.2s;
 }
 
-.booking_buttons.deleteSome:hover {
+.deleteSome:hover {
   background-color: white;
   color: var(--accent);
   border-radius: 10px;
 }
 
-.booking_buttons.deleteAll {
+.deleteAll {
   color: white;
   background-color: red;
   transition: 0.2s;
 }
 
-.booking_buttons.deleteAll:hover {
+.deleteAll:hover {
   background-color: white;
   color: red;
   border-radius: 10px;
