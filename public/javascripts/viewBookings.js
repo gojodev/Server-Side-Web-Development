@@ -1,29 +1,31 @@
-function toggleButtonStyle(button, styleName) {
-    // Remove the style class from all buttons
-    var buttons = document.querySelectorAll('.booking_buttons');
-    buttons.forEach(b => b.classList.remove(styleName));
-
-    // Add the style class to the clicked button
-    button.classList.add(styleName);
-}
-
-// todo: allow the hover stye to be changed on the button clicked and the default one show first
-function logBookingInfo(row) {
-    // Remove the 'active' class from all rows
+function toggleButtonStyle(styleName) {
     var rows = document.querySelectorAll('.tr-hover');
-    rows.forEach(r => r.classList.remove('active'));
+    rows.forEach(r => r.classList.remove("modify"));
+    rows.forEach(r => r.classList.remove("deleteSome"));
+    rows.forEach(r => r.classList.remove("deleteAll"));
+
+    rows.forEach(r => r.classList.add(styleName));
+
+    document.getElementById("modify").classList.remove("modify_active");
+    document.getElementById("deleteSome").classList.remove("deleteSome_active");
+    document.getElementById("deleteAll").classList.remove("deleteAll_active");
+
+    document.getElementById(styleName).classList.toggle(`${styleName}_active`);
 }
 
-document.getElementById("modify").addEventListener("click", () => {
-    console.log("modify pressed");
+let modify_button = document.getElementById("modify");
+modify_button.addEventListener("click", () => {
+    toggleButtonStyle("modify");
 });
 
 document.getElementById("deleteSome").addEventListener("click", () => {
-    console.log("deleteSome pressed");
+    toggleButtonStyle("deleteSome");
+
 });
 
 document.getElementById("deleteAll").addEventListener("click", () => {
-    console.log("deleteAll pressed");
+    toggleButtonStyle("deleteAll");
+
 });
 
 function logBookingInfo(row) {

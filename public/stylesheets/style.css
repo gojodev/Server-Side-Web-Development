@@ -362,10 +362,6 @@ td {
   padding: 10px;
 }
 
-tr:nth-child(even) {
-  background-color: var(--section1);
-}
-
 #booking_details {
   border: 5px solid white;
   padding: 5px;
@@ -448,12 +444,9 @@ tr:nth-child(even) {
   transition: 0.2s;
 }
 
-/* will be the default color for hovering over a row before anything
-is selected */
 .tr-hover:hover {
+  background-color: var(--section1);
   opacity: 1;
-  color: white;
-  background-color: black;
 }
 
 .modify {
@@ -462,7 +455,8 @@ is selected */
   transition: 0.2s;
 }
 
-.modify:hover {
+.modify:hover,
+.modify_active {
   color: var(--modify);
   background: white;
   border-radius: 10px;
@@ -474,7 +468,8 @@ is selected */
   transition: 0.2s;
 }
 
-.deleteSome:hover {
+.deleteSome:hover,
+.deleteSome_active {
   background-color: white;
   color: var(--accent);
   border-radius: 10px;
@@ -486,7 +481,8 @@ is selected */
   transition: 0.2s;
 }
 
-.deleteAll:hover {
+.deleteAll:hover,
+.deleteAll_active {
   background-color: white;
   color: red;
   border-radius: 10px;
