@@ -128,28 +128,27 @@ if (isFirstRun) {
 
 document.getElementById("submit_button").addEventListener("click", getBookingDetails);
 
-// ! make sure this function doesn't overwite autoFill()
 function autoDate() {
     // automically set the current date
     let today = new Date().toJSON().slice(0, 10);
     let tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
     tomorrow = tomorrow.toJSON().slice(0, 10);
-    document.getElementById("date").value = tomorrow;
-    // return tomorrow;
+    // document.getElementById("date").value = tomorrow;
+    return tomorrow;
 }
 autoDate();
 
-// let data = {
-//     "name": "Emmanuel Koledoye",
-//     "email": "example@gmail.com",
-//     "card_number": "1111 2222 3333 5555",
-//     "expiry_date": "10/28",
-//     "cvc": "123",
-//     "time": "17:00",
-//     "date": autoDate(),
-//     "skill_level": "Advanced"
-// };
+let data = {
+    "name": "Person",
+    "email": "example@gmail.com",
+    "card_number": "1111 2222 3333 5555",
+    "expiry_date": "10/28",
+    "cvc": "123",
+    "time": "17:00",
+    "date": autoDate(),
+    "skill_level": "Advanced"
+};
 
 // ! only used for debugging
-// autoFill(data);
+autoFill(data);

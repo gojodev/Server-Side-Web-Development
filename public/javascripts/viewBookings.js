@@ -1,5 +1,3 @@
-// console.log(axios);/
-
 function toggleButtonStyle(styleName) {
     var rows = document.querySelectorAll('.tr-hover');
     rows.forEach(r => r.classList.remove("modify"));
@@ -25,12 +23,20 @@ document.getElementById("deleteSome").addEventListener("click", () => {
 
 });
 
-document.getElementById("deleteAll").addEventListener("click", () => {
-    toggleButtonStyle("deleteAll");
+document.getElementById("deleteAll").addEventListener("click", async () => {
 
-
+    await fetch("http://localhost:3000/deleteAll", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(bookingInfo)
+    });
 });
 
+var marked_bookings = [];
+// only add a booking into marked bookings if it has a different id to whats already in marked_ids
+var marked_ids = [];
 async function logBookingInfo(row) {
     // Create a JSON object with the information from the selected row
     var bookingInfo = {
@@ -45,15 +51,10 @@ async function logBookingInfo(row) {
         date: row.cells[8].innerText,
         skillLevel: row.cells[9].innerText
     };
-    console.log(bookingInfo)
-    await fetch("http://localhost:3000/deleteAll", {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(bookingInfo)
-    });
 
-    // Log the JSON object to the consoledele
+    // JSON.stringify is used to add strings to the key of the JSON
+    // so that it becomes a valid json object
     console.log(JSON.stringify(bookingInfo, null, 2));
+
+    
 }

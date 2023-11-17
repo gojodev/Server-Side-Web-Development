@@ -66,7 +66,7 @@ router.post('/modify', async function (req, res) {
 
 router.post('/deleteSome', async function (req, res) {
     try {
-
+        
     }
 
     catch (error) {
