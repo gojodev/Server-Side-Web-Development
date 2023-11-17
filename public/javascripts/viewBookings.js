@@ -24,6 +24,27 @@ document.getElementById("deleteSome").addEventListener("click", () => {
 });
 
 document.getElementById("deleteAll").addEventListener("click", async () => {
+    toggleButtonStyle("deleteAll");
+    var rows = document.querySelectorAll('.tr-hover');
+    var all_boookings = [];
+    var bookingInfo;
+    rows.forEach(r => {
+        bookingInfo = {
+            id: r.cells[0].innerText,
+            whenBooked: r.cells[1].innerText,
+            name: r.cells[2].innerText,
+            email: r.cells[3].innerText,
+            cardNumber: r.cells[4].innerText,
+            expiryDate: r.cells[5].innerText,
+            cvc: r.cells[6].innerText,
+            time: r.cells[7].innerText,
+            date: r.cells[8].innerText,
+            skillLevel: r.cells[9].innerText
+        };
+
+        all_boookings.push(bookingInfo);
+    });
+
 
     await fetch("http://localhost:3000/deleteAll", {
         method: "POST",
@@ -32,6 +53,10 @@ document.getElementById("deleteAll").addEventListener("click", async () => {
         },
         body: JSON.stringify(bookingInfo)
     });
+
+    // todo: this function doesn't refresh the page which is needed to show the updated change
+    // refresh the page - because it doesn't automically update the page
+    location.reload();
 });
 
 var marked_bookings = [];
@@ -55,6 +80,4 @@ async function logBookingInfo(row) {
     // JSON.stringify is used to add strings to the key of the JSON
     // so that it becomes a valid json object
     console.log(JSON.stringify(bookingInfo, null, 2));
-
-    
 }

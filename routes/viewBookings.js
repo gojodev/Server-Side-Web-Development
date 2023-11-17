@@ -77,10 +77,8 @@ router.post('/deleteSome', async function (req, res) {
 
 router.post('/deleteAll', async function (req, res) {
     try {
-        console.log("SERVER WILL BE DELETING ALL DOCUMENTS")
-        console.log("-"*30)
-        console.log(req.body)
-        await BookingModel.deleteMany({})
+        console.log("DELETED ALL DOCUMENTS FROM THE SERVER");
+        await BookingModel.deleteMany({});
     }
 
     catch (error) {
