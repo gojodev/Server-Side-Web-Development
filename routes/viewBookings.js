@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const mongoose = require("mongoose");
 
-// Establish the MongoDB connection only once when your application starts.
+// using 127.0.0.1 cause something you run into issues if you use localhost instead
 mongoose.connect('mongodb://127.0.0.1:27017/BookingDB', {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -34,7 +34,6 @@ router.get('/viewBookings', async function (req, res) {
 
         let reversedBookings = booking.slice().reverse();
 
-        // Assuming you have an EJS template 'viewBookings.ejs' to render the data.
         res.render('viewBookings', { bookings: reversedBookings });
     } catch (error) {
         console.error('Error fetching bookings:', error);
@@ -47,11 +46,46 @@ router.post('/viewBookings', async function (req, res) {
     try {
         const instance = new BookingModel(req.body);
         await instance.save();
-        // Redirect to the view bookings page after saving.
         res.redirect('/viewBookings');
     } catch (error) {
         console.error('Error saving booking:', error);
         res.status(500).send('Error saving booking');
+    }
+});
+
+router.post('/modify', async function (req, res) {
+    try {
+
+    }
+
+    catch (error) {
+        console.log("Error for modify: ", error);
+        res.status(500).send("Couldn't modify all bookings");
+    }
+});
+
+router.post('/deleteSome', async function (req, res) {
+    try {
+
+    }
+
+    catch (error) {
+        console.log("Error for deleteSome: ", error);
+        res.status(500).send("Couldn't delete some bookings");
+    }
+});
+
+router.post('/deleteAll', async function (req, res) {
+    try {
+        console.log("SERVER WILL BE DELETING ALL DOCUMENTS")
+        console.log("-"*30)
+        console.log(req.body)
+        await BookingModel.deleteMany({})
+    }
+
+    catch (error) {
+        console.log("Error for deleteAll: ", error);
+        res.status(500).send("Couldn't delete all bookings");
     }
 });
 

@@ -7,6 +7,7 @@
     "watch": "nodemon"
   },
   "dependencies": {
+    "axios": "^1.6.2",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "ejs": "^3.1.9",

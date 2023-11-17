@@ -1,3 +1,5 @@
+// console.log(axios);/
+
 function toggleButtonStyle(styleName) {
     var rows = document.querySelectorAll('.tr-hover');
     rows.forEach(r => r.classList.remove("modify"));
@@ -26,9 +28,10 @@ document.getElementById("deleteSome").addEventListener("click", () => {
 document.getElementById("deleteAll").addEventListener("click", () => {
     toggleButtonStyle("deleteAll");
 
+
 });
 
-function logBookingInfo(row) {
+async function logBookingInfo(row) {
     // Create a JSON object with the information from the selected row
     var bookingInfo = {
         id: row.cells[0].innerText,
@@ -42,6 +45,14 @@ function logBookingInfo(row) {
         date: row.cells[8].innerText,
         skillLevel: row.cells[9].innerText
     };
+    console.log(bookingInfo)
+    await fetch("http://localhost:3000/deleteAll", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(bookingInfo)
+    });
 
     // Log the JSON object to the consoledele
     console.log(JSON.stringify(bookingInfo, null, 2));

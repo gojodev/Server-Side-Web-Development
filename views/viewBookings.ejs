@@ -59,7 +59,7 @@
                 this same point extends to the database being on the localhost and not in a secure online server
             -->
         <% bookings.forEach(booking=> { %>
-            <tr class="tr-hover">
+            <tr class="tr-hover" onclick="logBookingInfo(this)">
                 <td>
                     <%= booking._id %>
                 </td>
@@ -110,7 +110,8 @@
             <img src="../images/LinkedIn.webp" class="bottom-images" alt="LinkedIn">
         </a>
     </footer>
-    <script src="../javascripts/viewBookings.js"></script>
+    <script src="../javascripts/viewBookings.js"
+        src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js"></script>
 </body>
 
 </html>
