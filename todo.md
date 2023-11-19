@@ -1,0 +1,1 @@
+- [] add option to deactive button selection

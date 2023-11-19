@@ -54,9 +54,7 @@ document.getElementById("deleteAll").addEventListener("click", async () => {
         body: JSON.stringify(bookingInfo)
     });
 
-    // todo: this function doesn't refresh the page which is needed to show the updated change
-    // refresh the page - because it doesn't automically update the page
-    location.reload();
+    // ? add a sync button because you make the page reload to show changes
 });
 
 var marked_bookings = [];
