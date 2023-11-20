@@ -1,30 +1,4 @@
-function toggleButtonStyle(styleName) {
-    var rows = document.querySelectorAll('.tr-hover');
-    rows.forEach(r => r.classList.remove("modify"));
-    rows.forEach(r => r.classList.remove("deleteSome"));
-    rows.forEach(r => r.classList.remove("deleteAll"));
-
-    rows.forEach(r => r.classList.add(styleName));
-
-    document.getElementById("modify").classList.remove("modify_active");
-    document.getElementById("deleteSome").classList.remove("deleteSome_active");
-    document.getElementById("deleteAll").classList.remove("deleteAll_active");
-
-    document.getElementById(styleName).classList.toggle(`${styleName}_active`);
-}
-
-let modify_button = document.getElementById("modify");
-modify_button.addEventListener("click", () => {
-    toggleButtonStyle("modify");
-});
-
-document.getElementById("deleteSome").addEventListener("click", () => {
-    toggleButtonStyle("deleteSome");
-
-});
-
-document.getElementById("deleteAll").addEventListener("click", async () => {
-    toggleButtonStyle("deleteAll");
+function bookingData() {
     var rows = document.querySelectorAll('.tr-hover');
     var all_boookings = [];
     var bookingInfo;
@@ -41,20 +15,98 @@ document.getElementById("deleteAll").addEventListener("click", async () => {
             date: r.cells[8].innerText,
             skillLevel: r.cells[9].innerText
         };
-
-        all_boookings.push(bookingInfo);
     });
 
+    all_boookings.push(bookingInfo);
+    return bookingInfo;
+}
 
-    await fetch("http://localhost:3000/deleteAll", {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(bookingInfo)
+function toggleButtonStyle(styleName) {
+    var rows = document.querySelectorAll('.tr-hover');
+    var styles = ["modify", "deleteSome", "deleteAll", "sync"];
+    for (let i = 0; i < styles.length; i++) {
+        rows.forEach(r => r.classList.remove(styles[i]));
+        rows.forEach(r => r.classList.remove(`${styles[i]}_active`));
+    }
+
+    if (bookingData() != undefined) {
+        rows.forEach(r => r.classList.add(styleName));
+        document.getElementById(styleName).classList.toggle(`${styleName}_active`);
+    }
+}
+
+function SyncPulse() {
+    if (bookingData() != undefined) {
+        document.getElementById("sync").classList.toggle("sync_pulse");
+        console.log("sync needed");
+    }
+}
+
+let data = {
+    "name": "Person",
+    "email": "example@gmail.com",
+    "card_number": "1111 2222 3333 5555",
+    "expiry_date": "10/28",
+    "cvc": "123",
+    "time": "17:00",
+    "date": "20-11-2023",
+    "skill_level": "Advanced"
+};
+
+// todo: remember to convert json parameter into valid json so use json.stringify
+function autoFill(data) {
+    let id_desc = ["name", "email", "card_number", "expiry_date", "cvc", "time", "date", "skill_level"];
+
+    for (let i = 0; i < id_desc.length; i++) {
+        let key = id_desc[i];
+        let value = data[key];
+
+        data[key] = value;
+        console.log(key, value);
+        document.getElementById(key).value = value;
+    }
+}
+
+// todo: create a /modify/id page
+let modify_button = document.getElementById("modify");
+modify_button.addEventListener("click", () => {
+    toggleButtonStyle("modify");
+    SyncPulse();
+});
+
+
+
+document.getElementById("sync").addEventListener("click", async () => {
+    toggleButtonStyle("sync");
+
+    await fetch("http://localhost:3000/viewBookings", {
+        method: "GET"
     });
 
-    // ? add a sync button because you make the page reload to show changes
+    location.reload();
+});
+
+
+document.getElementById("deleteSome").addEventListener("click", () => {
+    toggleButtonStyle("deleteSome");
+    SyncPulse();
+});
+
+
+document.getElementById("deleteAll").addEventListener("click", async () => {
+    toggleButtonStyle("deleteAll");
+    var bookingInfo = bookingData();
+
+    if (bookingInfo != undefined) {
+        SyncPulse();
+        await fetch("http://localhost:3000/deleteAll", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(bookingInfo)
+        });
+    }
 });
 
 var marked_bookings = [];

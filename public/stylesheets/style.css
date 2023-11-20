@@ -462,6 +462,48 @@ td {
   border-radius: 10px;
 }
 
+.sync,
+.sync_pulse {
+  color: white;
+  background-color: var(--section2);
+  transition: 0.2s;
+}
+
+.sync:hover {
+  transform: scale(1.05);
+}
+
+.sync_pulse {
+  animation-name: syncPulse;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+  transition: 0.2s;
+}
+
+@keyframes syncPulse {
+  0% {
+    color: white;
+    background-color: var(--section2);
+  }
+
+  50% {
+    color: var(--section2);
+    background-color: white;
+  }
+
+  100% {
+    color: white;
+    background-color: var(--section2);
+  }
+}
+
+.sync:hover,
+.sync_active {
+  color: var(--section2);
+  background: white;
+  border-radius: 10px;
+}
+
 .deleteSome {
   color: white;
   background-color: var(--accent);

@@ -75,6 +75,17 @@ router.post('/deleteSome', async function (req, res) {
     }
 });
 
+router.get('/deleteAll', async function (req, res) {
+    try {
+        console.log("get request for deleteALl");
+    }
+
+    catch (error) {
+        console.log("Error for deleteAll: ", error);
+        res.status(500).send("Couldn't delete all bookings");
+    }
+});
+
 router.post('/deleteAll', async function (req, res) {
     try {
         console.log("DELETED ALL DOCUMENTS FROM THE SERVER");
