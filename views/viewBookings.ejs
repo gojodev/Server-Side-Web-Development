@@ -58,12 +58,8 @@
             <th class="key"> skill_level </th>
         </tr>
 
-        <!-- because we don't need user authenication or in other words a user and password there's no need to hide the the financial information 
-                because security is not a prioty as it is not required due to hiding finanical information not being directly instrcuted 
-                this same point extends to the database being on the localhost and not in a secure online server
-            -->
         <% bookings.forEach(booking=> { %>
-            <tr class="tr-hover" onclick="logBookingInfo(this)">
+            <tr class="tr-hover" onclick="getElemId(this)">
                 <td>
                     <%= booking._id %>
                 </td>

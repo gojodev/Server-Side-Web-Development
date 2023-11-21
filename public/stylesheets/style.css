@@ -330,14 +330,19 @@ footer {
 }
 
 @keyframes flashingAnimation {
-  from {
+  0% {
     color: white;
     background: var(--accent);
   }
 
-  to {
+  50% {
     color: var(--accent);
     background: white;
+  }
+
+  100% {
+    color: white;
+    background: var(--accent);
   }
 }
 

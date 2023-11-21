@@ -53,9 +53,9 @@ router.post('/viewBookings', async function (req, res) {
     }
 });
 
-router.post('/modify', async function (req, res) {
+router.get('/modify', async function (req, res) {
     try {
-
+        res.render("modify");
     }
 
     catch (error) {
@@ -64,14 +64,15 @@ router.post('/modify', async function (req, res) {
     }
 });
 
-router.post('/deleteSome', async function (req, res) {
+router.post('/modify', async function (req, res) {
     try {
-        
+        console.log(req.body);
+        res.render("modify");
     }
 
     catch (error) {
-        console.log("Error for deleteSome: ", error);
-        res.status(500).send("Couldn't delete some bookings");
+        console.log("Error for modify: ", error);
+        res.status(500).send("Couldn't modify all bookings");
     }
 });
 
