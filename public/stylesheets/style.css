@@ -405,7 +405,8 @@ td {
   background-color: red;
 }
 
-.deleteAll:hover {
+.deleteAll:hover,
+.deleteAll_selected {
   color: red;
   background-color: white;
 }
@@ -415,7 +416,8 @@ td {
   background-color: var(--modify);
 }
 
-.modify:hover {
+.modify:hover,
+.modify_selected {
   color: var(--modify);
   background-color: white;
 }
@@ -425,7 +427,8 @@ td {
   background-color: var(--accent);
 }
 
-.deleteSome:hover {
+.deleteSome:hover,
+.deleteSome_selected {
   color: var(--accent);
   background-color: white;
 }

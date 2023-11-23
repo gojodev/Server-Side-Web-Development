@@ -59,7 +59,7 @@
         </tr>
 
         <% bookings.forEach(booking=> { %>
-            <tr class="tr-hover" onclick="getElemId(this)">
+            <tr class="tr-hover" onclick="selectBooking(this)">
                 <td>
                     <%= booking._id %>
                 </td>
@@ -110,7 +110,8 @@
             <img src="../images/LinkedIn.webp" class="bottom-images" alt="LinkedIn">
         </a>
     </footer>
-    <script src="../javascripts/viewBookings.js"></script>
+    <script src="../javascripts/viewBookings.js">
+    </script>
 </body>
 
 </html>

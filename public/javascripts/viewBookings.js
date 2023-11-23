@@ -21,21 +21,34 @@ function bookingData() {
     return bookingInfo;
 }
 
-var button_pressed = false;
+function rowSelectionStyle(style, index) {
+    if (index != undefined) {
+        var table = document.getElementById("booking_details");
+        table.rows[index].classList.toggle(style);
+        table.rows[index].classList.toggle(`${style}_selected`);
+    }
+}
+
 function toggleButtonStyle(styleName) {
     var rows = document.querySelectorAll('.tr-hover');
+
     var styles = ["modify", "deleteSome", "deleteAll", "sync"];
     for (let i = 0; i < styles.length; i++) {
         rows.forEach(r => r.classList.remove(styles[i]));
         rows.forEach(r => r.classList.remove(`${styles[i]}_active`));
     }
 
-    button_pressed = true;
 
     if (bookingData() != undefined) {
         rows.forEach(r => r.classList.add(styleName));
         document.getElementById(styleName).classList.toggle(`${styleName}_active`);
     }
+
+    console.log();
+}
+
+function hideButtonStyle(styleName) {
+    document.getElementById(styleName).classList.remove(`${styleName}_active`);
 }
 
 function SyncPulse() {
@@ -70,41 +83,62 @@ function autoFill(data) {
     }
 }
 
-var collected_bookings = [];
-var marked_ids = [];
+// ! global
+var bookingCount = 0;
+var rows = document.querySelectorAll('.tr-hover');
+bookingCount = rows.length;
 
-async function getElemId(row) {
+var collected_bookings = [];
+var OG_indexes = [];
+var marked_row = [];
+
+var selected_row;
+function selectBooking(rowElement) {
+
     var bookingInfo = {
-        id: row.cells[0].innerText,
-        whenBooked: row.cells[1].innerText,
-        name: row.cells[2].innerText,
-        email: row.cells[3].innerText,
-        cardNumber: row.cells[4].innerText,
-        expiryDate: row.cells[5].innerText,
-        cvc: row.cells[6].innerText,
-        time: row.cells[7].innerText,
-        date: row.cells[8].innerText,
-        skillLevel: row.cells[9].innerText
+        id: rowElement.cells[0].innerText,
+        whenBooked: rowElement.cells[1].innerText,
+        name: rowElement.cells[2].innerText,
+        email: rowElement.cells[3].innerText,
+        cardNumber: rowElement.cells[4].innerText,
+        expiryDate: rowElement.cells[5].innerText,
+        cvc: rowElement.cells[6].innerText,
+        time: rowElement.cells[7].innerText,
+        date: rowElement.cells[8].innerText,
+        skillLevel: rowElement.cells[9].innerText
     };
 
-    var id = bookingInfo.id;
+    selected_row = rowElement.rowIndex;
 
-    // don't add duplicates
-    // todo: check if a button has been pressed first
-
-    if (!marked_ids.includes(id)) {
+    if (!marked_row.includes(selected_row)) {
         collected_bookings.push(JSON.stringify(bookingInfo));
-        marked_ids.push([id, row.rowIndex]);
+        marked_row.push(selected_row);
+        // ? keep in mind that you only need to select one row for MODIFY
+
     }
 
-    console.log(button_pressed);
+    if (marked_row.includes(selected_row)) {
+        marked_row = marked_row.filter((current_row) => {
+            return current_row != selected_row;
+        });
+    }
+
+    OG_indexes = marked_row.filter((r) => {
+        return bookingCount - (r + 1);
+    });
+
+    console.log(OG_indexes);
 }
 
 // todo: create a /modify/id_page
 let modify_button = document.getElementById("modify");
 modify_button.addEventListener("click", async () => {
     toggleButtonStyle("modify");
-    SyncPulse();
+    hideButtonStyle("deleteSome");
+    hideButtonStyle("deleteAll");
+    rowSelectionStyle("modify", selected_row);
+    selectBooking(selected_row);
+
 
     await fetch("http://localhost:3000/modify", {
         method: "POST",
@@ -114,6 +148,7 @@ modify_button.addEventListener("click", async () => {
         body: JSON.stringify(collected_bookings)
     });
 
+    SyncPulse();
 });
 
 document.getElementById("sync").addEventListener("click", async () => {
@@ -128,13 +163,25 @@ document.getElementById("sync").addEventListener("click", async () => {
 
 
 document.getElementById("deleteSome").addEventListener("click", () => {
+    hideButtonStyle("modify");
     toggleButtonStyle("deleteSome");
+    hideButtonStyle("deleteAll");
+    selectBooking(selected_row);
+
+
+    rowSelectionStyle("deleteSome", selected_row);
+
     SyncPulse();
 });
 
 
 document.getElementById("deleteAll").addEventListener("click", async () => {
+    hideButtonStyle("modify");
+    hideButtonStyle("deleteSome");
     toggleButtonStyle("deleteAll");
+    rowSelectionStyle("deleteAll", selected_row);
+    selectBooking(selected_row);
+
     var bookingInfo = bookingData();
 
     if (bookingInfo != undefined) {

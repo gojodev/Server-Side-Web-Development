@@ -56,6 +56,7 @@ router.post('/viewBookings', async function (req, res) {
 router.get('/modify', async function (req, res) {
     try {
         res.render("modify");
+        let bookingInfo = req.body;
     }
 
     catch (error) {
