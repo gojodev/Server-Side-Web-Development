@@ -43,8 +43,6 @@ function toggleButtonStyle(styleName) {
         rows.forEach(r => r.classList.add(styleName));
         document.getElementById(styleName).classList.toggle(`${styleName}_active`);
     }
-
-    console.log();
 }
 
 function hideButtonStyle(styleName) {
@@ -58,31 +56,6 @@ function SyncPulse() {
     }
 }
 
-let data = {
-    "name": "Person",
-    "email": "example@gmail.com",
-    "card_number": "1111 2222 3333 5555",
-    "expiry_date": "10/28",
-    "cvc": "123",
-    "time": "17:00",
-    "date": "20-11-2023",
-    "skill_level": "Advanced"
-};
-
-// todo: remember to convert json parameter into valid json so use json.stringify
-function autoFill(data) {
-    let id_desc = ["name", "email", "card_number", "expiry_date", "cvc", "time", "date", "skill_level"];
-
-    for (let i = 0; i < id_desc.length; i++) {
-        let key = id_desc[i];
-        let value = data[key];
-
-        data[key] = value;
-        console.log(key, value);
-        document.getElementById(key).value = value;
-    }
-}
-
 // ! global
 var bookingCount = 0;
 var rows = document.querySelectorAll('.tr-hover');
@@ -93,8 +66,13 @@ var OG_indexes = [];
 var marked_row = [];
 
 var selected_row;
-function selectBooking(rowElement) {
 
+var modify_pressed = false;
+var deleteSome_pressed = false;
+var deleteAll_pressed = false;
+
+// todo: fix row selection
+function selectBooking(rowElement) {
     var bookingInfo = {
         id: rowElement.cells[0].innerText,
         whenBooked: rowElement.cells[1].innerText,
@@ -110,25 +88,49 @@ function selectBooking(rowElement) {
 
     selected_row = rowElement.rowIndex;
 
+    console.log("selected_row: ", selected_row);
+
+    if (modify_pressed) {
+        rowSelectionStyle("modify", selected_row);
+    }
+    if (deleteSome_pressed) {
+        rowSelectionStyle("deleteSome", selected_row);
+    }
+    if (deleteAll_pressed) {
+        rowSelectionStyle("deleteAll", selected_row);
+    }
+
+    // to select row
+    // ? keep in mind that you only need to select one row for MODIFY
     if (!marked_row.includes(selected_row)) {
         collected_bookings.push(JSON.stringify(bookingInfo));
         marked_row.push(selected_row);
-        // ? keep in mind that you only need to select one row for MODIFY
-
     }
 
-    if (marked_row.includes(selected_row)) {
-        marked_row = marked_row.filter((current_row) => {
-            return current_row != selected_row;
-        });
-    }
 
+    // to unselect a row
+    // if (marked_row.includes(selected_row)) {
+    //     marked_row = marked_row.filter((current_row) => {
+    //         return current_row != selected_row;
+    //     });
+    // }
+
+    // this will prob moved
     OG_indexes = marked_row.filter((r) => {
         return bookingCount - (r + 1);
     });
 
-    console.log(OG_indexes);
 }
+
+document.getElementById("sync").addEventListener("click", async () => {
+    toggleButtonStyle("sync");
+
+    await fetch("http://localhost:3000/viewBookings", {
+        method: "GET"
+    });
+
+    location.reload();
+});
 
 // todo: create a /modify/id_page
 let modify_button = document.getElementById("modify");
@@ -136,9 +138,9 @@ modify_button.addEventListener("click", async () => {
     toggleButtonStyle("modify");
     hideButtonStyle("deleteSome");
     hideButtonStyle("deleteAll");
-    rowSelectionStyle("modify", selected_row);
-    selectBooking(selected_row);
-
+    modify_pressed = true;
+    deleteSome_pressed = false;
+    deleteAll_pressed = false;
 
     await fetch("http://localhost:3000/modify", {
         method: "POST",
@@ -151,25 +153,13 @@ modify_button.addEventListener("click", async () => {
     SyncPulse();
 });
 
-document.getElementById("sync").addEventListener("click", async () => {
-    toggleButtonStyle("sync");
-
-    await fetch("http://localhost:3000/viewBookings", {
-        method: "GET"
-    });
-
-    location.reload();
-});
-
-
 document.getElementById("deleteSome").addEventListener("click", () => {
     hideButtonStyle("modify");
     toggleButtonStyle("deleteSome");
     hideButtonStyle("deleteAll");
-    selectBooking(selected_row);
-
-
-    rowSelectionStyle("deleteSome", selected_row);
+    deleteSome_pressed = true;
+    deleteAll_pressed = false;
+    modify_pressed = false;
 
     SyncPulse();
 });
@@ -179,8 +169,9 @@ document.getElementById("deleteAll").addEventListener("click", async () => {
     hideButtonStyle("modify");
     hideButtonStyle("deleteSome");
     toggleButtonStyle("deleteAll");
-    rowSelectionStyle("deleteAll", selected_row);
-    selectBooking(selected_row);
+    deleteAll_pressed = true;
+    modify_pressed = false;
+    deleteSome_pressed = false;
 
     var bookingInfo = bookingData();
 
