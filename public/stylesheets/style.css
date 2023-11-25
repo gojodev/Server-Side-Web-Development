@@ -537,3 +537,38 @@ td {
   color: red;
   border-radius: 10px;
 }
+
+#about_main,
+#about_gojodev_containter,
+#about_desc,
+#help_main {
+  margin: auto;
+  color: white;
+}
+
+#about_main {
+  display: flex;
+}
+
+#about_gojodev_containter {
+  float: left;
+  align-items: flex-start;
+  width: 15%;
+}
+
+#about_desc {
+  float: right;
+  width: 85%;
+}
+
+#about_gojodev {
+  width: 150px;
+}
+
+#caopoints_text {
+  color: #007acc;
+}
+
+#caopoints_text:hover {
+  text-decoration: underline;
+}

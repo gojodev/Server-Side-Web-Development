@@ -77,9 +77,10 @@ router.post('/modify', async function (req, res) {
     }
 });
 
-router.get('/deleteAll', async function (req, res) {
+router.post('/deleteSome', async function (req, res) {
     try {
-        console.log("get request for deleteALl");
+        let indexes
+        await BookingModel.findByIdAndDelete();
     }
 
     catch (error) {
@@ -90,7 +91,7 @@ router.get('/deleteAll', async function (req, res) {
 
 router.post('/deleteAll', async function (req, res) {
     try {
-        console.log("DELETED ALL DOCUMENTS FROM THE SERVER");
+
         await BookingModel.deleteMany({});
     }
 
