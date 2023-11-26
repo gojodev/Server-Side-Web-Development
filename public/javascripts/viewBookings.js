@@ -1,4 +1,6 @@
-function bookingData() {
+
+
+function AllbookingData() {
     var rows = document.querySelectorAll('.tr-hover');
     var all_boookings = [];
     var bookingInfo;
@@ -18,7 +20,7 @@ function bookingData() {
     });
 
     all_boookings.push(bookingInfo);
-    return bookingInfo;
+    return JSON.stringify(bookingInfo);
 }
 
 function rowSelectionStyle(style, index) {
@@ -27,26 +29,6 @@ function rowSelectionStyle(style, index) {
         table.rows[index].classList.toggle(style);
         table.rows[index].classList.toggle(`${style}_selected`);
     }
-}
-
-function getAllRowData(selected_row) {
-    let table = document.getElementById("booking_details");
-    let rowElement = table.rows[selected_row];
-
-    var bookingInfo = {
-        id: rowElement.cells[0].innerText,
-        whenBooked: rowElement.cells[1].innerText,
-        name: rowElement.cells[2].innerText,
-        email: rowElement.cells[3].innerText,
-        cardNumber: rowElement.cells[4].innerText,
-        expiryDate: rowElement.cells[5].innerText,
-        cvc: rowElement.cells[6].innerText,
-        time: rowElement.cells[7].innerText,
-        date: rowElement.cells[8].innerText,
-        skillLevel: rowElement.cells[9].innerText
-    };
-
-    return bookingInfo;
 }
 
 function getID(selected_row) {
@@ -66,7 +48,7 @@ function toggleButtonStyle(styleName) {
     }
 
 
-    if (bookingData() != undefined) {
+    if (AllbookingData() != undefined) {
         rows.forEach(r => r.classList.add(styleName));
         document.getElementById(styleName).classList.toggle(`${styleName}_active`);
     }
@@ -77,19 +59,11 @@ function hideButtonStyle(styleName) {
 }
 
 // ! global
-var bookingCount = 0;
-var rows = document.querySelectorAll('.tr-hover');
-bookingCount = rows.length;
-
+// is prefered over AllBookingInfo() because collected_bookings is filtered
 var collected_bookings = [];
 var button_pressed;
 
-// ! these are not zero indexed
-// the orignal order of indexes that MongoDB has
-// ! have have to replace thesse with the _id for Mongo in which case there will be no need for Og_indexes
-var OG_indexes = [];
-// the order table rows (techically reversed from what MongoDB has)
-var marked_row = [];
+var marked_ids = [];
 
 var selected_row;
 
@@ -111,8 +85,11 @@ function selectBooking(rowElement) {
         skillLevel: rowElement.cells[9].innerText
     };
 
+    bookingInfo = JSON.stringify(bookingInfo);
+
     // ! Note: that selected_row is zero indexed but the 0th row is the ID, when booked, name email, etc...
     selected_row = rowElement.rowIndex;
+    let current_id = getID(selected_row);
 
     console.log("selected_row: ", selected_row);
 
@@ -127,85 +104,71 @@ function selectBooking(rowElement) {
     }
 
     button_pressed = modify_pressed || deleteSome_pressed || deleteAll_pressed;
+    console.log("button_pressed: ", button_pressed);
     if (button_pressed) {
         // to select row
         // ? keep in mind that you only need to select one row for MODIFY
-        if (!marked_row.includes(selected_row)) {
-            collected_bookings.push(JSON.stringify(bookingInfo));
-            marked_row.push(selected_row);
-
-            marked_row.filter((r) => {
-                var og_index = bookingCount - r;
-                if (!OG_indexes.includes(og_index)) {
-                    OG_indexes.push(og_index);
-                }
-            });
+        if (!marked_ids.includes(current_id) && !collected_bookings.includes(bookingInfo)) {
+            collected_bookings.push(bookingInfo);
+            marked_ids.push(getID(selected_row));
         }
 
         // to unselect a row
-        else if (marked_row.includes(selected_row)) {
-            marked_row = marked_row.filter((current_row) => {
-                return current_row != selected_row;
+        else if (marked_ids.includes(current_id)) {
+            marked_ids = marked_ids.filter((id) => {
+                return current_id != id;
             });
 
-            OG_indexes = OG_indexes.filter((current_row) => {
-                // convert to an OG index
-                current_row = bookingCount - current_row;
-                return current_row !== selected_row;
+            collected_bookings = collected_bookings.filter((booking) => {
+                return booking != bookingInfo;
             });
+            console.log(marked_ids);
         }
-
-        SyncPulse();
-        console.log(marked_row, OG_indexes);
     }
 }
 
-//1 2 3 4 5 (OG, not zero indexed)
-//5 4 3 2 1 (reversed, not zero indexed)
-//0 1 2 3 4 (OG order)
-//4 3 2 1 0 (reversed order)
-
-function SyncPulse() {
-    if (selected_row != undefined) {
-        document.getElementById("sync").classList.toggle("sync_pulse");
-    }
+function syncPulse() {
+    document.getElementById("sync").classList.toggle("sync_pulse");
 }
 
 document.getElementById("sync").addEventListener("click", async () => {
+    let valid_bookings = collected_bookings.length > 0;
+    if (valid_bookings) {
+        if (modify_pressed) {
+            await fetch("http://localhost:3000/modify", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(collected_bookings)
+            });
 
-    if (modify_pressed) {
-        await fetch("http://localhost:3000/modify", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(collected_bookings)
-        });
-    }
+        }
 
-    else if (deleteSome_pressed) {
-        await fetch("http://localhost:3000/deleteSome", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(collected_bookings)
-        });
-    }
+        if (deleteSome_pressed) {
 
-    else if (deleteAll_pressed) {
-        let bookingInfo = bookingData();
+            await fetch("http://localhost:3000/deleteSome", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(marked_ids)
+            });
+        }
 
-        if (bookingInfo != undefined) {
-            SyncPulse();
+        if (deleteAll_pressed) {
+            // the back end doesn't need a parameter as it is deleteing all the records
+            // so AllbookingData() won't be sent the req.body 
+
             await fetch("http://localhost:3000/deleteAll", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(bookingInfo)
+                body: JSON.stringify(collected_bookings)
             });
         }
+        syncPulse();
     }
 });
 
@@ -221,30 +184,13 @@ modify_button.addEventListener("click", async () => {
 });
 
 document.getElementById("deleteSome").addEventListener("click", async () => {
-    marked_row = [];
     hideButtonStyle("modify");
     toggleButtonStyle("deleteSome");
     hideButtonStyle("deleteAll");
     deleteSome_pressed = true;
     deleteAll_pressed = false;
     modify_pressed = false;
-
-    let bookingInfo = [];
-    OG_indexes.filter((current) => {
-        bookingInfo.push(getAllRowData(current));
-    });
-
-    if (OG_indexes.length > 0) {
-        await fetch("http://localhost:3000/deleteAll", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(bookingInfo)
-        });
-    }
 });
-
 
 document.getElementById("deleteAll").addEventListener("click", async () => {
     hideButtonStyle("modify");
@@ -254,11 +200,3 @@ document.getElementById("deleteAll").addEventListener("click", async () => {
     modify_pressed = false;
     deleteSome_pressed = false;
 });
-
-// toggleButtonStyle("sync");
-
-// await fetch("http://localhost:3000/viewBookings", {
-//     method: "GET"
-// });
-
-// location.reload();

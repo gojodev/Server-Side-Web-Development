@@ -53,22 +53,12 @@ router.post('/viewBookings', async function (req, res) {
     }
 });
 
-router.get('/modify', async function (req, res) {
-    try {
-        res.render("modify");
-        let bookingInfo = req.body;
-    }
-
-    catch (error) {
-        console.log("Error for modify: ", error);
-        res.status(500).send("Couldn't modify all bookings");
-    }
-});
-
 router.post('/modify', async function (req, res) {
     try {
-        console.log(req.body);
-        res.render("modify");
+        let bookingInfo = req.body;
+        console.log("modify: ", bookingInfo);
+        // res.render('modify', { bookingInfo });
+        // await BookingModel.findByIdAndUpdate(bookingInfo._id);
     }
 
     catch (error) {
@@ -79,19 +69,23 @@ router.post('/modify', async function (req, res) {
 
 router.post('/deleteSome', async function (req, res) {
     try {
-        let indexes
-        await BookingModel.findByIdAndDelete();
+        let indexes = req.body;
+        console.log("deleteSome:", indexes);
+
+        for (let i = 0; i < indexes.length; i++) {
+            await BookingModel.findByIdAndDelete(indexes[i]);
+        }
     }
 
     catch (error) {
-        console.log("Error for deleteAll: ", error);
-        res.status(500).send("Couldn't delete all bookings");
+        console.log("Error for deleteSome: ", error);
+        res.status(500).send("Couldn't delete some bookings");
     }
 });
 
 router.post('/deleteAll', async function (req, res) {
     try {
-
+        console.log("deleted all records from the database")
         await BookingModel.deleteMany({});
     }
 
