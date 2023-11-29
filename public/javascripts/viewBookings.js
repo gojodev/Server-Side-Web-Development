@@ -225,12 +225,6 @@ document.getElementById("deleteAll").addEventListener("click", async () => {
     syncPulse();
 });
 
-let searchbar = document.getElementById('searchbar');
-searchbar.addEventListener('click', () => {
-    searchbar.classList.toggle('searchbar_selected')
-});
-
-// Function to clear the table
 function clearTable() {
     var table = document.getElementById('booking_details');
     // Remove all rows except the header
@@ -239,14 +233,12 @@ function clearTable() {
     }
 }
 
-// Function to render results in the table
-function renderResults(results) {
-    // console.log("RESULTS: ", results);
+function renderResults(results, query) {
     var table = document.getElementById('booking_details');
-    // Iterate through the results and append rows to the table
     var current_booking;
     results.forEach((booking) => {
         var row = table.insertRow(-1);
+        row.classList.toggle('tr-hover');
         if (booking.item != undefined) {
             current_booking = booking.item
         }
@@ -254,23 +246,36 @@ function renderResults(results) {
             current_booking = booking;
         }
         for (let key in current_booking) {
-            var cell = row.insertCell();
-            cell.innerHTML = current_booking[key];
+            let cell = row.insertCell();
+            let value = current_booking[key]
+            cell.innerHTML = value;
+
+            if (query != null) {
+                query = query.toLowerCase();
+                value = value.toLowerCase();
+
+                if (query.includes(value) || value == query) {
+                    cell.style.color = 'green';
+                }
+            }
         }
+
     });
 }
 
-// this value won't be changed
+// this value won't be changed unlike the AlbookingData()
 var all_bookings = AllbookingData();
+
+let searchbar = document.getElementById('searchbar');
 searchbar.addEventListener('input', () => {
     let query = searchbar.value;
 
     if (query !== '') {
-
+        searchbar.classList.add('searchbar_selected')
         console.log('all bookings: ', all_bookings);
 
         const fuse = new Fuse(all_bookings, {
-            keys: ['id', 'name', 'email']
+            keys: ['id', 'name', 'email', 'CVC', 'skill_level']
         });
 
         console.log('query: ', query);
@@ -278,18 +283,17 @@ searchbar.addEventListener('input', () => {
 
         console.log('results: ', results);
 
-
         clearTable();
 
         // Render the filtered results
-        renderResults(results);
+        renderResults(results, query);
     }
 
     else {
-        console.log("NO QUERY");
         // If the search input is empty, restore the original table
+        searchbar.classList.remove('searchbar_selected')
         clearTable();
-        renderResults(all_bookings);
+        renderResults(all_bookings, null);
     }
 });
 

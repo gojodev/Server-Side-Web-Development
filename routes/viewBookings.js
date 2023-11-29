@@ -59,7 +59,6 @@ var Modifybooking;
 router.post('/modify', async function (req, res) {
     try {
         Modifybooking = req.body;
-        console.log(Modifybooking);
         res.render('modify', { bookings: Modifybooking });
     }
 
@@ -88,12 +87,11 @@ router.get('/modify', async function (req, res) {
 router.post('/modifyDB', async function (req, res) {
     try {
         let booking = req.body;
-        console.log(booking);
-        // let id = booking.id;
-        // res.render('modify', { booking });
+        console.log('modifyDB: ', booking);
 
-        // add await to this later
-        // BookingModel.findByIdAndUpdate(id, booking);
+        await BookingModel.findByIdAndUpdate(booking.id, booking);
+
+        res.render('index')
     }
 
     catch (error) {

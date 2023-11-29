@@ -589,11 +589,15 @@ table {
 }
 
 #searchbar {
-  padding: 10px;
+  width: 350px;
+  padding: 15px;
   border-radius: 20px;
 }
 
-#searchbar:hover,
+#searchbar:hover {
+  color: red;
+}
+
 .searchbar_selected {
   border: 5px solid red;
 }

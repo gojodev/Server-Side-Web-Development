@@ -63,7 +63,8 @@ const slasher = (number) => number.split("").reduce((seed, next, index) => {
 }, "");
 
 // ! CARD DETAILS ------------------
-
+var current_date = new Date();
+document.getElementById("when_booked").value = current_date.toLocaleString('en-GB');
 function getBookingDetails() {
     // express js will collect the values using the name attribute and req.body so they don't need to be collected here
     // this also means that I don't have to make a post request in this script as it has already been done in the html page
@@ -73,11 +74,9 @@ function getBookingDetails() {
     let email = document.getElementById("email").value;
     let date = document.getElementById("date").value;
 
-    let current_date = new Date();
     let input_date = new Date(date);
 
-    console.log("current_date: ", current_date);
-    document.getElementById("when_booked").value = current_date.toLocaleString('en-GB');
+    
 
     let input_date_time = input_date.getTime();
     let current_date_time = current_date.getTime();
@@ -154,16 +153,16 @@ function autoDate() {
 }
 autoDate();
 
-let data = {
-    "name": "PersonX",
-    "email": "exampleX@gmail.com",
-    "card_number": "1111 2222 3333 5555",
-    "expiry_date": "10/28",
-    "cvc": "123",
-    "time": "17:00",
-    "date": autoDate(),
-    "skill_level": "Advanced"
-};
+// let data = {
+//     "name": "PersonX",
+//     "email": "exampleX@gmail.com",
+//     "card_number": "1111 2222 3333 5555",
+//     "expiry_date": "10/28",
+//     "cvc": "123",
+//     "time": "17:00",
+//     "date": autoDate(),
+//     "skill_level": "Advanced"
+// };
 
-// ! only used for debugging
-autoFill(data);
+// // ! only used for debugging
+// autoFill(data);
