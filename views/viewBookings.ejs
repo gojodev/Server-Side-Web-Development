@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Bookings</title>
     <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
-    <link rel="icon" type="image/x-icon" href="../images/Nexus_Logo.webp">
+    <link rel="icon" type="image/x-icon" href="../images/GojoDev.png">
 </head>
 
 <body>
     <section id="welcome" class="section-borders">
-        <a href="index.html">
-            <img src="../images/Nexus_Logo.webp" id="banner-logo">
+        <a href="index">
+            <img src="../images/GojoDev.png" id="banner-logo">
         </a>
         <h1 id="workshop"> Coding Lessons Workshop</h1>
         <nav>
@@ -25,6 +25,7 @@
     </section>
 
     <br>
+
     <div id="booking_buttons_container">
         <div class="booking_buttons sync" id="sync">
             Confirm
@@ -59,7 +60,7 @@
         </tr>
 
         <% bookings.forEach(booking=> { %>
-            <tr class="tr-hover" onclick="selectBooking(this)">
+            <tr class="tr-hover">
                 <td>
                     <%= booking._id %>
                 </td>
@@ -110,7 +111,7 @@
             <img src="../images/LinkedIn.webp" class="bottom-images" alt="LinkedIn">
         </a>
     </footer>
-    <script src="../javascripts/viewBookings.js">
+    <script src="../javascripts/viewBookings.js" type="module">
     </script>
 </body>
 

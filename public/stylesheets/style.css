@@ -85,7 +85,7 @@ a:hover,
 }
 
 #get_started {
-  background-image: url("../images/programming_imagejpg.jpg");
+  background-image: url("../images/programming_image.jpg");
   height: 700px;
   flex-flow: column;
   display: flex;
@@ -160,6 +160,7 @@ input:hover {
 }
 
 .modify_button {
+  width: 100%;
   color: white;
   background-color: var(--modify);
   transition: 0.2s;
@@ -196,6 +197,14 @@ input:hover {
 .booking_title {
   color: var(--accent);
   text-align: center;
+}
+
+.modify-colour {
+  color: var(--modify);
+}
+
+.modify-border {
+  border: 5px solid var(--modify);
 }
 
 #booking_container {

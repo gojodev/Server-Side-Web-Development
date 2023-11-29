@@ -9,6 +9,14 @@ router.get('/index', function (req, res) {
   res.render('index');
 });
 
+router.get('/index.html', function (req, res) {
+  res.render('index');
+});
+
+router.get('/index.ejs', function (req, res) {
+  res.render('index');
+});
+
 router.get('/about', function (req, res) {
   res.render('about');
 });

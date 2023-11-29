@@ -68,6 +68,8 @@ const slasher = (number) => number.split("").reduce((seed, next, index) => {
 
 function getBookingDetails() {
     // express js will collect the values using the name attribute and req.body so they don't need to be collected here
+    // this also means that I don't have to make a post request in this script as it has already been done in the html page
+    // with the form i mean just access the info using req.body on the server side
     isFirstRun = true;
     let name = document.getElementById("name").value;
     let email = document.getElementById("email").value;
@@ -110,6 +112,7 @@ function getBookingDetails() {
     }
 }
 
+// eslint-disable-next-line no-unused-vars
 function autoFill(data) {
     let id_desc = ["name", "email", "card_number", "expiry_date", "cvc", "time", "date", "skill_level"];
 
@@ -126,7 +129,21 @@ if (isFirstRun) {
     getBookingDetails();
 }
 
-document.getElementById("submit_button").addEventListener("click", getBookingDetails);
+// So i don't need to create 2 scripts for the same functionaility
+// --------
+let submit_button = document.getElementById("submit_button");
+var inputElement = document.querySelector('input');
+if (submit_button != null) {
+    inputElement.style.color = '#007acc';
+    submit_button.addEventListener("click", getBookingDetails);
+}
+
+let modify_button = document.getElementById("modify_button");
+if (modify_button != null) {
+    inputElement.style.color = 'orange';
+    modify_button.addEventListener("click", getBookingDetails);
+}
+// -------
 
 function autoDate() {
     // automically set the current date

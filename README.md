@@ -1,6 +1,6 @@
 
 ```
-phase 1
+project
 ├─ .eslintrc.json
 ├─ .firebaserc
 ├─ app.js
@@ -40,47 +40,4 @@ phase 1
    ├─ help.ejs
    ├─ index.ejs
    └─ viewBookings.ejs
-
-```
-```
-phase 1
-├─ .eslintrc.json
-├─ .firebaserc
-├─ app.js
-├─ bin
-│  └─ www
-├─ firebase.json
-├─ package-lock.json
-├─ package.json
-├─ public
-│  ├─ images
-│  │  ├─ css3.png
-│  │  ├─ GitHub.webp
-│  │  ├─ html.png
-│  │  ├─ javascript.png
-│  │  ├─ kofi.webp
-│  │  ├─ LinkedIn.webp
-│  │  ├─ Nexus_Logo.webp
-│  │  ├─ programming_imagejpg.jpg
-│  │  └─ python.jpg
-│  ├─ javascripts
-│  │  ├─ booking.js
-│  │  ├─ bundle.js
-│  │  └─ viewBookings.js
-│  └─ stylesheets
-│     └─ style.css
-├─ README.md
-├─ routes
-│  ├─ index.js
-│  └─ viewBookings.js
-├─ todo.md
-└─ views
-   ├─ 404.ejs
-   ├─ about.ejs
-   ├─ booking.ejs
-   ├─ error.ejs
-   ├─ help.ejs
-   ├─ index.ejs
-   └─ viewBookings.ejs
-
 ```

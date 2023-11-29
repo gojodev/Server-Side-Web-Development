@@ -1,4 +1,9 @@
+// can't use commonJS or ES6 modules on the client side
+// without a CDN
 
+// todo: use Fuse for the search function
+import Fuse from 'https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.mjs';
+console.log(Fuse);
 
 function AllbookingData() {
     var rows = document.querySelectorAll('.tr-hover');
@@ -24,10 +29,22 @@ function AllbookingData() {
 }
 
 function rowSelectionStyle(style, index) {
+    var table = document.getElementById("booking_details");
     if (index != undefined) {
-        var table = document.getElementById("booking_details");
-        table.rows[index].classList.toggle(style);
-        table.rows[index].classList.toggle(`${style}_selected`);
+        if (style == "modify") {
+            // remove the toggle style from all the other rows
+            var rows = document.querySelectorAll('.tr-hover');
+            rows.forEach(r => r.classList.add("modify"));
+            rows.forEach(r => r.classList.remove("modify_selected"));
+
+            // then just add the toggle style to the selected row
+            table.rows[index].classList.toggle(style);
+            table.rows[index].classList.toggle(`${style}_selected`);
+        }
+        else {
+            table.rows[index].classList.toggle(style);
+            table.rows[index].classList.toggle(`${style}_selected`);
+        }
     }
 }
 
@@ -71,7 +88,7 @@ var modify_pressed = false;
 var deleteSome_pressed = false;
 var deleteAll_pressed = false;
 
-function selectBooking(rowElement) {
+export function selectBooking(rowElement) {
     var bookingInfo = {
         id: rowElement.cells[0].innerText,
         whenBooked: rowElement.cells[1].innerText,
@@ -91,8 +108,7 @@ function selectBooking(rowElement) {
     selected_row = rowElement.rowIndex;
     let current_id = getID(selected_row);
 
-    console.log("selected_row: ", selected_row);
-
+    // todo: only allow one row to be select at a time
     if (modify_pressed) {
         rowSelectionStyle("modify", selected_row);
     }
@@ -104,13 +120,21 @@ function selectBooking(rowElement) {
     }
 
     button_pressed = modify_pressed || deleteSome_pressed || deleteAll_pressed;
-    console.log("button_pressed: ", button_pressed);
+
     if (button_pressed) {
         // to select row
         // ? keep in mind that you only need to select one row for MODIFY
+        let rowID = getID(selected_row);
         if (!marked_ids.includes(current_id) && !collected_bookings.includes(bookingInfo)) {
-            collected_bookings.push(bookingInfo);
-            marked_ids.push(getID(selected_row));
+            // only select one id and row information at a time if modift button is pressed
+            if (modify_pressed) {
+                collected_bookings = [bookingInfo];
+                marked_ids = [rowID];
+            }
+            else {
+                collected_bookings.push(bookingInfo);
+                marked_ids.push(rowID);
+            }
         }
 
         // to unselect a row
@@ -122,53 +146,50 @@ function selectBooking(rowElement) {
             collected_bookings = collected_bookings.filter((booking) => {
                 return booking != bookingInfo;
             });
-            console.log(marked_ids);
         }
     }
 }
 
 function syncPulse() {
-    document.getElementById("sync").classList.toggle("sync_pulse");
+    document.getElementById("sync").classList.add("sync_pulse");
 }
 
 document.getElementById("sync").addEventListener("click", async () => {
-    let valid_bookings = collected_bookings.length > 0;
-    if (valid_bookings) {
-        if (modify_pressed) {
-            await fetch("http://localhost:3000/modify", {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(collected_bookings)
-            });
+    if (modify_pressed) {
+        await fetch("http://localhost:3000/modify", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: collected_bookings
+        });
 
-        }
+        location.replace('http://localhost:3000/modify');
+    }
 
-        if (deleteSome_pressed) {
+    if (deleteSome_pressed) {
+        await fetch("http://localhost:3000/deleteSome", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(marked_ids)
+        });
+    }
 
-            await fetch("http://localhost:3000/deleteSome", {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(marked_ids)
-            });
-        }
+    if (deleteAll_pressed) {
+        await fetch("http://localhost:3000/deleteAll", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    }
 
-        if (deleteAll_pressed) {
-            // the back end doesn't need a parameter as it is deleteing all the records
-            // so AllbookingData() won't be sent the req.body 
-
-            await fetch("http://localhost:3000/deleteAll", {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(collected_bookings)
-            });
-        }
-        syncPulse();
+    // ! sometimes you have to do a hard refresh (empty cache and refresh)
+    // for the page to load itself and make sure that no google extensions are interfering
+    if (deleteSome_pressed || deleteAll_pressed) {
+        location.reload(true);
     }
 });
 
@@ -181,6 +202,7 @@ modify_button.addEventListener("click", async () => {
     modify_pressed = true;
     deleteSome_pressed = false;
     deleteAll_pressed = false;
+    syncPulse();
 });
 
 document.getElementById("deleteSome").addEventListener("click", async () => {
@@ -190,6 +212,7 @@ document.getElementById("deleteSome").addEventListener("click", async () => {
     deleteSome_pressed = true;
     deleteAll_pressed = false;
     modify_pressed = false;
+    syncPulse();
 });
 
 document.getElementById("deleteAll").addEventListener("click", async () => {
@@ -199,4 +222,15 @@ document.getElementById("deleteAll").addEventListener("click", async () => {
     deleteAll_pressed = true;
     modify_pressed = false;
     deleteSome_pressed = false;
+    syncPulse();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    var tableRows = document.querySelectorAll('.tr-hover');
+    tableRows.forEach((row) => {
+
+        row.addEventListener('click', () => {
+            selectBooking(row);
+        })
+    });
 });

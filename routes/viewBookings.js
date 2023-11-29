@@ -53,28 +53,60 @@ router.post('/viewBookings', async function (req, res) {
     }
 });
 
+// ! GLOBAL
+var Modifybooking;
+// one is needed to send the booking data to the modify page for the client side
 router.post('/modify', async function (req, res) {
     try {
-        let bookingInfo = req.body;
-        console.log("modify: ", bookingInfo);
-        // res.render('modify', { bookingInfo });
-        // await BookingModel.findByIdAndUpdate(bookingInfo._id);
+        Modifybooking = req.body;
+        console.log(Modifybooking);
+        res.render('modify', { bookings: Modifybooking });
     }
 
     catch (error) {
         console.log("Error for modify: ", error);
-        res.status(500).send("Couldn't modify all bookings");
+        res.status(500).send("POST: Couldn't modify all bookings");
+    }
+});
+
+router.get('/modify', async function (req, res) {
+    try {
+        console.log("GET MOdifyXZ: ", Modifybooking);
+        res.render('modify', { bookings: Modifybooking });
+    }
+    catch (error) {
+        console.log("Error for modify: ", error);
+        res.status(500).send("GET: Couldn't modify all bookings");
+    }
+});
+
+// the other one is needed to send the edited information over to the database
+router.post('/modifyDB', async function (req, res) {
+    try {
+        let booking = req.body;
+        console.log(booking);
+        // let id = booking.id;
+        // res.render('modify', { booking });
+
+        // add await to this later
+        // BookingModel.findByIdAndUpdate(id, booking);
+    }
+
+    catch (error) {
+        console.log("Error for modify: ", error);
+        res.status(500).send("POST modifyDB: Couldn't modify all bookings");
     }
 });
 
 router.post('/deleteSome', async function (req, res) {
     try {
         let indexes = req.body;
-        console.log("deleteSome:", indexes);
 
         for (let i = 0; i < indexes.length; i++) {
             await BookingModel.findByIdAndDelete(indexes[i]);
         }
+
+        res.render('viewBookings');
     }
 
     catch (error) {
@@ -87,6 +119,9 @@ router.post('/deleteAll', async function (req, res) {
     try {
         console.log("deleted all records from the database")
         await BookingModel.deleteMany({});
+        res.status(200).send("Deleted all bookings");
+
+        res.render('viewBookings');
     }
 
     catch (error) {

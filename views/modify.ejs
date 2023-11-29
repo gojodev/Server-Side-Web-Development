@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking - Modify</title>
     <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
-    <link rel="icon" type="image/x-icon" href="../images/Nexus_Logo.webp">
+    <link rel="icon" type="image/x-icon" href="../images/GojoDev.png">
 </head>
 
 <body>
     <section id="welcome" class="section-borders">
         <a href="index.html">
-            <img src="../images/Nexus_Logo.webp" id="banner-logo">
+            <img src="../images/GojoDev.png" id="banner-logo">
         </a>
         <h1 id="workshop"> Coding Lessons Workshop</h1>
         <nav>
@@ -31,9 +31,9 @@
 
     <section id="booking_container">
         <section id="create_section">
-            <h1 class="booking_title">Create</h1>
-            <div class="booking_content" id="create_container">
-                <form method="post" action="viewBookings">
+            <h1 class="booking_title modify-colour">Modify</h1>
+            <div class="booking_content modify-border" id="create_container">
+                <form method="post" action="modifyDB">
                     <input class="hide_input" id="when_booked" name="when_booked"></input>
 
                     <label> Name </label>
@@ -67,7 +67,7 @@
                         <option value="Advanced">Advanced</option>
                     </select>
                     <br><br>
-                    <input type="submit" value="Submit" id="modify_button">
+                    <input type="submit" value="Submit" class="modify_button">
                     <br>
                     <input type="submit" value="Clear All" id="clear_all">
                 </form>
@@ -99,7 +99,35 @@
         </a>
     </footer>
 
-    <script src="../javascripts/booking.js" type="module"></script>
+    <script src="../javascripts/booking.js">
+    </script>
+
+    <script>
+        function autoFill(data) {
+            let id_desc = ["name", "email", "card_number", "expiry_date", "cvc", "time", "date", "skill_level"];
+
+            for (let i = 0; i < id_desc.length; i++) {
+                let key = id_desc[i];
+                let value = data[key];
+
+                data[key] = value;
+                document.getElementById(key).value = value;
+            }
+        }
+
+        let Modifybooking = {
+            "name": '<%=bookings.name%>',
+            "email": '<%=bookings.email%>',
+            "card_number": '<%=bookings.card_number%>',
+            "expiry_date": '<%=bookings.expiry_date%>',
+            "cvc": '<%=bookings.cvc%>',
+            "time": '<%=bookings.time%>',
+            "date": '<%=bookings.date%>',
+            "skill_level": '<%=bookings.skill_level%>'
+        };
+
+        console.log('<%=bookings.card_number%>');
+    </script>
 </body>
 
 </html>
