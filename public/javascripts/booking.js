@@ -1,11 +1,9 @@
-// firebase hosting:channel:deploy preview (at root) was only used to share progress
-
-/**
- * because we aren't using authenication which means there are no login pages every user can access other user's details
- * so by extension it should be okay to generate IDs on the client side
- */
-
 function error_msg(message, element_ids) {
+    /**
+     * the reason why this is a for loop is out of good practce for if i
+     * were to edit multople html elements for a single edit
+     * in my case i didn't need to but i left the option there cause i could
+     */
     for (let i = 0; i < element_ids.length; i++) {
         document.getElementById(element_ids[i]).classList.toggle("error_borders");
     }
@@ -157,8 +155,8 @@ function autoDate() {
 autoDate();
 
 let data = {
-    "name": "Person",
-    "email": "example@gmail.com",
+    "name": "PersonX",
+    "email": "exampleX@gmail.com",
     "card_number": "1111 2222 3333 5555",
     "expiry_date": "10/28",
     "cvc": "123",

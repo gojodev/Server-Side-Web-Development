@@ -71,7 +71,11 @@ router.post('/modify', async function (req, res) {
 
 router.get('/modify', async function (req, res) {
     try {
-        console.log("GET MOdifyXZ: ", Modifybooking);
+
+        console.log("GET MOdifyXZ: ", Modifybooking.skill_level);
+        if (Modifybooking == undefined) {
+            Modifybooking = '';
+        }
         res.render('modify', { bookings: Modifybooking });
     }
     catch (error) {
@@ -119,8 +123,6 @@ router.post('/deleteAll', async function (req, res) {
     try {
         console.log("deleted all records from the database")
         await BookingModel.deleteMany({});
-        res.status(200).send("Deleted all bookings");
-
         res.render('viewBookings');
     }
 

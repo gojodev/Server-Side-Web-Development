@@ -99,9 +99,6 @@
         </a>
     </footer>
 
-    <script src="../javascripts/booking.js">
-    </script>
-
     <script>
         function autoFill(data) {
             let id_desc = ["name", "email", "card_number", "expiry_date", "cvc", "time", "date", "skill_level"];
@@ -116,18 +113,22 @@
         }
 
         let Modifybooking = {
-            "name": '<%=bookings.name%>',
-            "email": '<%=bookings.email%>',
-            "card_number": '<%=bookings.card_number%>',
-            "expiry_date": '<%=bookings.expiry_date%>',
-            "cvc": '<%=bookings.cvc%>',
-            "time": '<%=bookings.time%>',
-            "date": '<%=bookings.date%>',
-            "skill_level": '<%=bookings.skill_level%>'
+            name: '<%=bookings.name%>',
+            email: '<%=bookings.email%>',
+            card_number: '<%=bookings.card_number%>',
+            expiry_date: '<%=bookings.expiry_date%>',
+            cvc: '<%=bookings.cvc%>',
+            time: '<%=bookings.time%>',
+            date: '<%=bookings.date%>',
+            skill_level: '<%=bookings.skill_level%>'
         };
 
-        console.log('<%=bookings.card_number%>');
+        console.log(Modifybooking);
+
+        autoFill(Modifybooking);
+
     </script>
+    <script src="../javascripts/booking.js"></script>
 </body>
 
 </html>

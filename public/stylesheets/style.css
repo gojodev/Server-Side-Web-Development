@@ -376,6 +376,10 @@ td {
   padding: 10px;
 }
 
+table {
+  width: 95%;
+}
+
 #booking_details {
   border: 5px solid white;
   padding: 5px;
@@ -390,11 +394,10 @@ td {
 }
 
 #booking_buttons_container {
-  /* gap: 150px; */
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 70%;
+  width: 95%;
   margin: auto;
 }
 
@@ -486,7 +489,10 @@ td {
   transition: 0.2s;
 }
 
-.sync:hover {
+.sync:hover,
+.modify:hover,
+.deleteSome:hover,
+.deleteAll:hover {
   transform: scale(1.05);
 }
 
@@ -580,4 +586,19 @@ td {
 
 #caopoints_text:hover {
   text-decoration: underline;
+}
+
+#searchbar {
+  padding: 10px;
+  border-radius: 20px;
+}
+
+#searchbar:hover,
+.searchbar_selected {
+  border: 5px solid red;
+}
+
+.search_selected {
+  color: black;
+  background: white;
 }

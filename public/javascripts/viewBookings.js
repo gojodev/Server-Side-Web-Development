@@ -1,9 +1,8 @@
-// can't use commonJS or ES6 modules on the client side
-// without a CDN
+const DarkReader = require('darkreader');
+DarkReader.setFetchMethod(window.fetch);
+// DarkReader.auto();
 
-// todo: use Fuse for the search function
-import Fuse from 'https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.mjs';
-console.log(Fuse);
+const Fuse = require('fuse.js')
 
 function AllbookingData() {
     var rows = document.querySelectorAll('.tr-hover');
@@ -22,10 +21,11 @@ function AllbookingData() {
             date: r.cells[8].innerText,
             skillLevel: r.cells[9].innerText
         };
+        all_boookings.push(bookingInfo);
     });
 
-    all_boookings.push(bookingInfo);
-    return JSON.stringify(bookingInfo);
+    return all_boookings;
+    // return JSON.stringify(bookingInfo);
 }
 
 function rowSelectionStyle(style, index) {
@@ -225,10 +225,77 @@ document.getElementById("deleteAll").addEventListener("click", async () => {
     syncPulse();
 });
 
+let searchbar = document.getElementById('searchbar');
+searchbar.addEventListener('click', () => {
+    searchbar.classList.toggle('searchbar_selected')
+});
+
+// Function to clear the table
+function clearTable() {
+    var table = document.getElementById('booking_details');
+    // Remove all rows except the header
+    for (var i = table.rows.length - 1; i > 0; i--) {
+        table.deleteRow(i);
+    }
+}
+
+// Function to render results in the table
+function renderResults(results) {
+    // console.log("RESULTS: ", results);
+    var table = document.getElementById('booking_details');
+    // Iterate through the results and append rows to the table
+    var current_booking;
+    results.forEach((booking) => {
+        var row = table.insertRow(-1);
+        if (booking.item != undefined) {
+            current_booking = booking.item
+        }
+        else {
+            current_booking = booking;
+        }
+        for (let key in current_booking) {
+            var cell = row.insertCell();
+            cell.innerHTML = current_booking[key];
+        }
+    });
+}
+
+// this value won't be changed
+var all_bookings = AllbookingData();
+searchbar.addEventListener('input', () => {
+    let query = searchbar.value;
+
+    if (query !== '') {
+
+        console.log('all bookings: ', all_bookings);
+
+        const fuse = new Fuse(all_bookings, {
+            keys: ['id', 'name', 'email']
+        });
+
+        console.log('query: ', query);
+        let results = fuse.search(query);
+
+        console.log('results: ', results);
+
+
+        clearTable();
+
+        // Render the filtered results
+        renderResults(results);
+    }
+
+    else {
+        console.log("NO QUERY");
+        // If the search input is empty, restore the original table
+        clearTable();
+        renderResults(all_bookings);
+    }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     var tableRows = document.querySelectorAll('.tr-hover');
     tableRows.forEach((row) => {
-
         row.addEventListener('click', () => {
             selectBooking(row);
         })
