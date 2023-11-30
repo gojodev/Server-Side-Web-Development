@@ -71,7 +71,7 @@ router.post('/modify', async function (req, res) {
 router.get('/modify', async function (req, res) {
     try {
 
-        console.log("GET MOdify: ", Modifybooking);
+        console.log("GET Modify: ", Modifybooking);
         if (Modifybooking == undefined) {
             Modifybooking = '';
         }

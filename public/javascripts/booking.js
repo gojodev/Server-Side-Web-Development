@@ -153,6 +153,8 @@ function autoDate() {
 }
 autoDate();
 
+// Saves time in filling in data in the booking.js page
+
 // let data = {
 //     "name": "PersonX",
 //     "email": "exampleX@gmail.com",

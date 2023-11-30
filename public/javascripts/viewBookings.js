@@ -1,6 +1,6 @@
 const DarkReader = require('darkreader');
 DarkReader.setFetchMethod(window.fetch);
-// DarkReader.auto();
+DarkReader.auto();
 
 const Fuse = require('fuse.js')
 
@@ -25,7 +25,6 @@ function AllbookingData() {
     });
 
     return all_boookings;
-    // return JSON.stringify(bookingInfo);
 }
 
 function rowSelectionStyle(style, index) {
@@ -89,7 +88,6 @@ var deleteSome_pressed = false;
 var deleteAll_pressed = false;
 
 export function selectBooking(rowElement) {
-    console.log('row selected')
     var bookingInfo = {
         id: rowElement.cells[0].innerText,
         whenBooked: rowElement.cells[1].innerText,
@@ -243,7 +241,6 @@ function clickListner() {
     });
 }
 
-
 function renderResults(results, query) {
     var table = document.getElementById('booking_details');
     var current_booking;
@@ -282,22 +279,16 @@ searchbar.addEventListener('input', () => {
     let query = searchbar.value;
 
     if (query !== '') {
-        searchbar.classList.add('searchbar_selected')
-        console.log('all bookings: ', all_bookings);
+        searchbar.classList.add('searchbar_selected');
 
         const fuse = new Fuse(all_bookings, {
             keys: ['id', 'name', 'email', 'cvv', 'skillLevel']
         });
 
-        console.log('query: ', query);
         let results = fuse.search(query);
-
-        console.log('results: ', results);
-
 
         clearTable();
 
-        // Render the filtered results
         renderResults(results, query);
 
         clickListner();
