@@ -15,15 +15,15 @@ mongoose.connect('mongodb://127.0.0.1:27017/BookingDB', {
     });
 
 const BookingSchema = new mongoose.Schema({
-    when_booked: String,
+    whenBooked: String,
     name: String,
     email: String,
-    card_number: String,
-    expiry_date: String,
-    cvc: String,
+    cardNumber: String,
+    expiryDate: String,
+    cvv: String,
     time: String,
     date: String,
-    skill_level: String,
+    skillLevel: String,
 });
 
 const BookingModel = mongoose.model('Booking', BookingSchema);
@@ -71,7 +71,7 @@ router.post('/modify', async function (req, res) {
 router.get('/modify', async function (req, res) {
     try {
 
-        console.log("GET MOdifyXZ: ", Modifybooking.skill_level);
+        console.log("GET MOdify: ", Modifybooking);
         if (Modifybooking == undefined) {
             Modifybooking = '';
         }
@@ -84,14 +84,12 @@ router.get('/modify', async function (req, res) {
 });
 
 // the other one is needed to send the edited information over to the database
-router.post('/modifyDB', async function (req, res) {
+router.post('/modifyDB/:id', async function (req, res) {
     try {
         let booking = req.body;
-        console.log('modifyDB: ', booking);
+        await BookingModel.findByIdAndUpdate(req.params.id, booking);
 
-        await BookingModel.findByIdAndUpdate(booking.id, booking);
-
-        res.render('index')
+        res.redirect('http://localhost:3000/viewBookings');
     }
 
     catch (error) {

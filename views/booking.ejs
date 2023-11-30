@@ -34,7 +34,7 @@
             <h1 class="booking_title">Create</h1>
             <div class="booking_content" id="create_container">
                 <form method="post" action="viewBookings">
-                    <input class="hide_input" id="when_booked" name="when_booked"></input>
+                    <input class="hide_input" id="whenBooked" name="whenBooked"></input>
 
                     <label> Name </label>
                     <input placeholder="firstName lastName" type="text" id="name" name="name" required><br>
@@ -43,15 +43,15 @@
                     <input placeholder="example@gmail.com" type="text" id="email" name="email" required><br>
 
                     <label> Card Number </label>
-                    <input placeholder="0000 0000 0000 0000" type="text" maxlength="19" id="card_number"
-                        name="card_number" required><br>
+                    <input placeholder="0000 0000 0000 0000" type="text" maxlength="19" id="cardNumber"
+                        name="cardNumber" required><br>
 
                     <label> Expiry Date </label>
-                    <input placeholder="MM/YY" type="text" id="expiry_date" name="expiry_date" maxlength="5"
+                    <input placeholder="MM/YY" type="text" id="expiryDate" name="expiryDate" maxlength="5"
                         required><br>
 
-                    <label> CVC </label>
-                    <input placeholder="123" maxlength="3" type="text" id="cvc" name="cvc" required><br>
+                    <label> cvv </label>
+                    <input placeholder="123" maxlength="3" type="text" id="cvv" name="cvv" required><br>
 
 
                     <label> Date for Booking </label>
@@ -60,8 +60,8 @@
                     <label> Time for Booking </label>
                     <input type="time" id="time" name="time" required><br>
 
-                    <label for="skill_level" id="skill_level_text">SKill level: </label>
-                    <select name="skill_level" id="skill_level" required>
+                    <label for="skillLevel" id="skillLevel_text">SKill level: </label>
+                    <select name="skillLevel" id="skillLevel" required>
                         <option value="Beginner">Beginner</option>
                         <option value="Intermediate">Intermediate</option>
                         <option value="Advanced">Advanced</option>

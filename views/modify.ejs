@@ -24,17 +24,12 @@
         </nav>
     </section>
 
-    <br>
-    <div id="notice">
-        Please confirm your skill level and payment details.
-    </div>
-
     <section id="booking_container">
         <section id="create_section">
             <h1 class="booking_title modify-colour">Modify</h1>
             <div class="booking_content modify-border" id="create_container">
-                <form method="post" action="modifyDB">
-                    <input class="hide_input" id="when_booked" name="when_booked"></input>
+                <form method="post" action="modifyDB/<%= bookings.id %>">
+                    <input class="hide_input" id="whenBooked" name="whenBooked"></input>
 
                     <label> Name </label>
                     <input placeholder="firstName lastName" type="text" id="name" name="name" value="<%=bookings.name%>"
@@ -45,28 +40,32 @@
                         value="<%=bookings.email%>" required><br>
 
                     <label> Card Number </label>
-                    <input placeholder="0000 0000 0000 0000" type="text" maxlength="19" id="card_number"
-                        name="card_number" required><br>
+                    <input placeholder="0000 0000 0000 0000" type="text" maxlength="19" id="cardNumber"
+                        name="cardNumber" value="<%=bookings.cardNumber%>" required><br>
 
                     <label> Expiry Date </label>
-                    <input placeholder="MM/YY" type="text" id="expiry_date" name="expiry_date" maxlength="5"
+                    <input placeholder="MM/YY" type="text" id="expiryDate" name="expiryDate"
+                        value="<%=bookings.expiryDate%>" maxlength="5" required><br>
+
+                    <label> cvv </label>
+                    <input placeholder="000" maxlength="3" type="text" id="cvv" name="cvv" value="<%=bookings.cvv%>"
                         required><br>
 
-                    <label> CVC </label>
-                    <input placeholder="000" maxlength="3" type="text" id="cvc" name="cvc" required><br>
-
-
                     <label> Date for Booking </label>
-                    <input type="date" id="date" name="date" value="<%=bookings.date%>"  required><br>
+                    <input type="date" id="date" name="date" value="<%=bookings.date%>" required><br>
 
                     <label> Time for Booking </label>
                     <input type="time" id="time" name="time" value="<%=bookings.time%>" required><br>
 
-                    <label for="skill_level" id="skill_level_text">SKill level: </label>
-                    <select name="skill_level" id="skill_level"  required>
-                        <option value="Beginner">Beginner</option>
-                        <option value="Intermediate">Intermediate</option>
-                        <option value="Advanced">Advanced</option>
+                    <label for="skillLevel" id="skillLevel_text">SKill level: </label>
+                    <select name="skillLevel" id="skillLevel" required>
+                        <option value="Beginner" <%=bookings.skillLevel==='Beginner' ?'selected' : '' %> >Beginner
+                        </option>
+                        <option value="Intermediate" <%=bookings.skillLevel==='Intermediate' ?'selected' : '' %>
+                            >Intermediate
+                        </option>
+                        <option value="Advanced" <%=bookings.skillLevel==='Advanced' ?'selected' : '' %>>Advanced
+                        </option>
                     </select>
                     <br><br>
                     <input type="submit" value="Modify" class="modify_button">

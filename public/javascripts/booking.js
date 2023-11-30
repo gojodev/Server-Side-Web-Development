@@ -21,14 +21,14 @@ document.getElementById("error_section").classList.toggle("hide");
 let isFirstRun = false;
 
 // no .value because i'm using event listeners and will later get their value
-let card_number = document.getElementById("card_number");
-var expiry_date = document.getElementById("expiry_date");
+let cardNumber = document.getElementById("cardNumber");
+var expiryDate = document.getElementById("expiryDate");
 
 // ! CARD DETAILS ------------------
 
-card_number.addEventListener("input", () => {
-    const cleanedValue = card_number.value.replace(/\D/g, ''); // Remove non-numeric characters
-    card_number.value = formatNumber(cleanedValue);
+cardNumber.addEventListener("input", () => {
+    const cleanedValue = cardNumber.value.replace(/\D/g, ''); // Remove non-numeric characters
+    cardNumber.value = formatNumber(cleanedValue);
 });
 
 const formatNumber = (number) => number.split("").reduce((seed, next, index) => {
@@ -37,16 +37,16 @@ const formatNumber = (number) => number.split("").reduce((seed, next, index) => 
 }, "");
 
 // add a slash automically for the expiry date inbetween the 2nd and 3rd number
-expiry_date.addEventListener("input", () => expiry_date.value = slasher(expiry_date.value.replaceAll(" ")));
+expiryDate.addEventListener("input", () => expiryDate.value = slasher(expiryDate.value.replaceAll(" ")));
 
 const slasher = (number) => number.split("").reduce((seed, next, index) => {
-    var input_expiry_date = expiry_date.value;
+    var input_expiryDate = expiryDate.value;
 
-    if (index % 2 == 0 && index !== 0 && !input_expiry_date.includes("/")) {
+    if (index % 2 == 0 && index !== 0 && !input_expiryDate.includes("/")) {
         seed += "/";
     }
 
-    let input_data = input_expiry_date.split("/");
+    let input_data = input_expiryDate.split("/");
 
     let inputMonth = Number(input_data[0]);
     let inputYear = Number(input_data[1]);
@@ -56,7 +56,7 @@ const slasher = (number) => number.split("").reduce((seed, next, index) => {
 
     let valid_date = (inputYear < currentYear || (inputYear === currentYear && inputMonth < currentMonth));
     if (!valid_date) {
-        error_msg("Invalid Expiry Date", ["expiry_date"]);
+        error_msg("Invalid Expiry Date", ["expiryDate"]);
     }
     // will still return regardless so that the user can see what went wrong at least
     return seed + next;
@@ -64,7 +64,7 @@ const slasher = (number) => number.split("").reduce((seed, next, index) => {
 
 // ! CARD DETAILS ------------------
 var current_date = new Date();
-document.getElementById("when_booked").value = current_date.toLocaleString('en-GB');
+document.getElementById("whenBooked").value = current_date.toLocaleString('en-GB');
 function getBookingDetails() {
     // express js will collect the values using the name attribute and req.body so they don't need to be collected here
     // this also means that I don't have to make a post request in this script as it has already been done in the html page
@@ -76,7 +76,7 @@ function getBookingDetails() {
 
     let input_date = new Date(date);
 
-    
+
 
     let input_date_time = input_date.getTime();
     let current_date_time = current_date.getTime();
@@ -111,7 +111,7 @@ function getBookingDetails() {
 
 // eslint-disable-next-line no-unused-vars
 function autoFill(data) {
-    let id_desc = ["name", "email", "card_number", "expiry_date", "cvc", "time", "date", "skill_level"];
+    let id_desc = ["name", "email", "cardNumber", "expiryDate", "cvv", "time", "date", "skillLevel"];
 
     for (let i = 0; i < id_desc.length; i++) {
         let key = id_desc[i];
@@ -156,12 +156,12 @@ autoDate();
 // let data = {
 //     "name": "PersonX",
 //     "email": "exampleX@gmail.com",
-//     "card_number": "1111 2222 3333 5555",
-//     "expiry_date": "10/28",
-//     "cvc": "123",
+//     "cardNumber": "1111 2222 3333 5555",
+//     "expiryDate": "10/28",
+//     "cvv": "123",
 //     "time": "17:00",
 //     "date": autoDate(),
-//     "skill_level": "Advanced"
+//     "skillLevel": "Advanced"
 // };
 
 // // ! only used for debugging

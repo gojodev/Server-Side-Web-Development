@@ -44,7 +44,7 @@
         </div>
 
         <div>
-            <input type="text" id="searchbar" placeholder="ID, Email, CVC, or Skill Level"> 
+            <input type="text" id="searchbar" placeholder="ID, Email, cvv, or Skill Level"> 
         </div>
     </div>
     <br>
@@ -57,10 +57,10 @@
             <th class="key"> Email </th>
             <th class="key"> Card Number </th>
             <th class="key"> Expiry Date</th>
-            <th class="key"> CVC </th>
+            <th class="key"> CVV </th>
             <th class="key"> Time </th>
             <th class="key"> Date </th>
-            <th class="key"> skill_level </th>
+            <th class="key"> skillLevel </th>
         </tr>
 
         <% bookings.forEach(booking=> { %>
@@ -69,7 +69,7 @@
                     <%= booking._id %>
                 </td>
                 <td>
-                    <%= booking.when_booked %>
+                    <%= booking.whenBooked %>
                 </td>
                 <td>
                     <%= booking.name %>
@@ -78,13 +78,13 @@
                     <%= booking.email %>
                 </td>
                 <td>
-                    <%= booking.card_number %>
+                    <%= booking.cardNumber %>
                 </td>
                 <td>
-                    <%= booking.expiry_date %>
+                    <%= booking.expiryDate %>
                 </td>
                 <td>
-                    <%= booking.cvc %>
+                    <%= booking.cvv %>
                 </td>
                 <td>
                     <%= booking.time %>
@@ -93,7 +93,7 @@
                     <%= booking.date %>
                 </td>
                 <td>
-                    <%= booking.skill_level %>
+                    <%= booking.skillLevel %>
                 </td>
             </tr>
             <% }); %>

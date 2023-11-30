@@ -16,7 +16,7 @@ function AllbookingData() {
             email: r.cells[3].innerText,
             cardNumber: r.cells[4].innerText,
             expiryDate: r.cells[5].innerText,
-            cvc: r.cells[6].innerText,
+            cvv: r.cells[6].innerText,
             time: r.cells[7].innerText,
             date: r.cells[8].innerText,
             skillLevel: r.cells[9].innerText
@@ -66,7 +66,7 @@ function toggleButtonStyle(styleName) {
 
 
     if (AllbookingData() != undefined) {
-        rows.forEach(r => r.classList.add(styleName));
+        rows.forEach(r => r.classList.toggle(styleName));
         document.getElementById(styleName).classList.toggle(`${styleName}_active`);
     }
 }
@@ -89,6 +89,7 @@ var deleteSome_pressed = false;
 var deleteAll_pressed = false;
 
 export function selectBooking(rowElement) {
+    console.log('row selected')
     var bookingInfo = {
         id: rowElement.cells[0].innerText,
         whenBooked: rowElement.cells[1].innerText,
@@ -96,7 +97,7 @@ export function selectBooking(rowElement) {
         email: rowElement.cells[3].innerText,
         cardNumber: rowElement.cells[4].innerText,
         expiryDate: rowElement.cells[5].innerText,
-        cvc: rowElement.cells[6].innerText,
+        cvv: rowElement.cells[6].innerText,
         time: rowElement.cells[7].innerText,
         date: rowElement.cells[8].innerText,
         skillLevel: rowElement.cells[9].innerText
@@ -233,6 +234,16 @@ function clearTable() {
     }
 }
 
+function clickListner() {
+    var tableRows = document.querySelectorAll('.tr-hover');
+    tableRows.forEach((row) => {
+        row.addEventListener('click', () => {
+            selectBooking(row);
+        });
+    });
+}
+
+
 function renderResults(results, query) {
     var table = document.getElementById('booking_details');
     var current_booking;
@@ -275,7 +286,7 @@ searchbar.addEventListener('input', () => {
         console.log('all bookings: ', all_bookings);
 
         const fuse = new Fuse(all_bookings, {
-            keys: ['id', 'name', 'email', 'CVC', 'skill_level']
+            keys: ['id', 'name', 'email', 'cvv', 'skillLevel']
         });
 
         console.log('query: ', query);
@@ -283,10 +294,13 @@ searchbar.addEventListener('input', () => {
 
         console.log('results: ', results);
 
+
         clearTable();
 
         // Render the filtered results
         renderResults(results, query);
+
+        clickListner();
     }
 
     else {
@@ -294,14 +308,9 @@ searchbar.addEventListener('input', () => {
         searchbar.classList.remove('searchbar_selected')
         clearTable();
         renderResults(all_bookings, null);
+        clickListner();
     }
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-    var tableRows = document.querySelectorAll('.tr-hover');
-    tableRows.forEach((row) => {
-        row.addEventListener('click', () => {
-            selectBooking(row);
-        })
-    });
-});
+
+clickListner();
