@@ -458,6 +458,7 @@ table {
 .tr-hover:hover {
   background-color: var(--section1);
   opacity: 1;
+  transform: scale(1.05);
 }
 
 .modify {
