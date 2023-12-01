@@ -155,16 +155,16 @@ autoDate();
 
 // Saves time in filling in data in the booking.js page
 
-let data = {
-    "name": "PersonA",
-    "email": "exampleA@gmail.com",
-    "cardNumber": "1111 2222 3333 5555",
-    "expiryDate": "10/28",
-    "cvv": "123",
-    "time": "17:00",
-    "date": autoDate(),
-    "skillLevel": "Advanced"
-};
+// let data = {
+//     "name": "PersonA",
+//     "email": "exampleA@gmail.com",
+//     "cardNumber": "1111 2222 3333 5555",
+//     "expiryDate": "10/28",
+//     "cvv": "123",
+//     "time": "17:00",
+//     "date": autoDate(),
+//     "skillLevel": "Advanced"
+// };
 
-// ! only used for debugging
-autoFill(data);
+// // ! only used for debugging
+// autoFill(data);

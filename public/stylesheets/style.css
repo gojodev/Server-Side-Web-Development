@@ -221,11 +221,6 @@ input:hover {
   opacity: 0;
 }
 
-/*  shows how many bookings are allowed to the user */
-ul {
-  color: white;
-}
-
 #error_section {
   margin: auto;
   color: white;

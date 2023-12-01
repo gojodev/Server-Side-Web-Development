@@ -211,7 +211,7 @@ document.getElementById("deleteSome").addEventListener("click", async () => {
     deleteSome_pressed = true;
     deleteAll_pressed = false;
     modify_pressed = false;
-    syncPulse();
+    syncPulse();    	
 });
 
 document.getElementById("deleteAll").addEventListener("click", async () => {
