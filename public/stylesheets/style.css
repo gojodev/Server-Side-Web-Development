@@ -1,8 +1,5 @@
-@import url(https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400&display=block);
-
 * {
   font-size: 1.1rem;
-  /* font-family: "Roboto Slab", sans-serif; */
   font-family: 'Courier New', Courier, monospace;
   font-weight: bold;
 }
@@ -14,12 +11,7 @@
   --section2: #2d2d30;
 }
 
-/* https://www.color-hex.com/color-palette/98179 */
-
-/* https://flowbite.com/docs/components/alerts/  */
-
 body {
-  /* font-family: "Roboto Slab", sans-serif; */
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -141,7 +133,7 @@ input:hover {
 }
 
 ::placeholder {
-  color: #007acc;
+  color: var(--accent);
   text-align: center;
   opacity: 0.9;
 }
@@ -322,7 +314,6 @@ footer {
   text-align: center;
   background-color: #252526;
   padding: 10px;
-  margin-top: auto;
 }
 
 #notice {
@@ -553,16 +544,10 @@ table {
   border-radius: 10px;
 }
 
-#about_main,
 #about_gojodev_containter,
-#about_desc,
-#help_main {
+#about_desc {
   margin: auto;
   color: white;
-}
-
-#about_main {
-  display: flex;
 }
 
 #about_gojodev_containter {
@@ -581,7 +566,7 @@ table {
 }
 
 #caopoints_text {
-  color: #007acc;
+  color: black;
 }
 
 #caopoints_text:hover {
@@ -605,4 +590,38 @@ table {
 .search_selected {
   color: black;
   background: white;
+}
+
+#help_main {
+  display: flex;
+  align-items: center;
+  transition: 0.2s;
+  margin: auto;
+  gap: 150px;
+}
+
+.icon_box {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: space-between;
+  background-color: white;
+  padding: 50px;
+  width: 15vw;
+  border-radius: 20px;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.icon_box:hover {
+  color: white;
+  background-color: orange;
+}
+
+.bubble {
+  color: white;
+  padding: 15px;
+  text-align: center;
+  border-radius: 20px;
+  background-color: orange;
 }
