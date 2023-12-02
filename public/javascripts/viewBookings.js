@@ -211,7 +211,7 @@ document.getElementById("deleteSome").addEventListener("click", async () => {
     deleteSome_pressed = true;
     deleteAll_pressed = false;
     modify_pressed = false;
-    syncPulse();    	
+    syncPulse();
 });
 
 document.getElementById("deleteAll").addEventListener("click", async () => {
@@ -277,6 +277,7 @@ var all_bookings = AllbookingData();
 let searchbar = document.getElementById('searchbar');
 searchbar.addEventListener('input', () => {
     let query = searchbar.value;
+
 
     if (query !== '') {
         searchbar.classList.add('searchbar_selected');

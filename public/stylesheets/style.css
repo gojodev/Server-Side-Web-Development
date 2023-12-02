@@ -133,11 +133,10 @@ input:hover {
 }
 
 ::placeholder {
-  color: var(--accent);
+  color: grey;
   text-align: center;
   opacity: 0.9;
 }
-
 
 #submit_button {
   color: white;
@@ -152,7 +151,6 @@ input:hover {
 }
 
 .modify_button {
-  width: 100%;
   color: white;
   background-color: var(--modify);
   transition: 0.2s;
@@ -177,7 +175,7 @@ input:hover {
 }
 
 #submit_button,
-#clear_all {
+.modify_button #clear_all {
   width: 100%;
   cursor: pointer;
 }
@@ -223,14 +221,32 @@ input:hover {
 
 #error_section {
   margin: auto;
-  color: white;
-  background: red;
   padding: 15px;
   width: 50%;
   display: block;
   text-align: center;
   margin: auto;
   border-radius: 5px;
+  animation-name: errorSection;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes errorSection {
+  0% {
+    color: white;
+    background: red;
+  }
+
+  50% {
+    color: red;
+    background-color: white;
+  }
+
+  100% {
+    color: white;
+    background: red;
+  }
 }
 
 .error_borders {

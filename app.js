@@ -41,6 +41,8 @@ app.use(function (err, req, res) {
 
 app.listen(PORT, () => {
   console.log(`Listening on localhhost:${PORT}`);
+  console.log('I deleted node_modules to save space when sending this to you')
+  console.log('Please use `npm install` to install dependencies and node_modules')
 });
 
 module.exports = app;
