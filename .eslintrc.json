@@ -12,6 +12,7 @@
         "allowImportExportEverywhere": true
     },
     "rules": {
+        "no-console": "off",
         "no-unused-vars": "warn"
     }
 }

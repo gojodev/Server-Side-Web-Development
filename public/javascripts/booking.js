@@ -67,7 +67,6 @@ nameElem.addEventListener('input', () => {
 let emailElem = document.getElementById('email');
 emailElem.addEventListener('input', () => {
     let email = emailElem.value;
-    console.log('email: ', email);
     if (!(email.includes("@") && email.includes(".") || email != '')) {
         error_msg("Invalid email input", "email");
     }
@@ -80,8 +79,6 @@ dateElem.addEventListener('input', () => {
 
     let input_date_time = input_date.getTime();
     let current_date_time = current_date.getTime();
-
-    console.log(input_date_time, current_date_time, input_date_time - current_date_time)
 
     let valid_date = (input_date_time - current_date_time) >= 0;
 
@@ -118,7 +115,6 @@ var inputTags = document.querySelectorAll('input');
 if (window.location.href.includes('modify')) {
     inputTags.forEach((input) => {
         input.style.color = 'orange';
-        console.log('input: ', input)
     })
 
     document.getElementById('modify_button').style.color = 'white';
