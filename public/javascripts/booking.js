@@ -116,19 +116,17 @@ if (window.location.href.includes('modify')) {
     inputTags.forEach((input) => {
         input.style.color = 'orange';
     })
-
     document.getElementById('modify_button').style.color = 'white';
-    document.getElementById('clear_all').style.color = 'white';
 
 }
 else {
     inputTags.forEach((input) => {
         input.style.color = '#007acc';
     })
-
     document.getElementById('submit_button').style.color = 'white';
-    document.getElementById('clear_all').style.color = 'white';
 }
+document.getElementById('clear_all').style.color = 'white';
+
 
 // -------
 

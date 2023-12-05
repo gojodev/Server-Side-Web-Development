@@ -144,34 +144,16 @@ input:hover {
   transition: 0.2s;
 }
 
-#submit_button:hover {
-  color: var(--accent);
-  background: white;
-  border-radius: 10px;
-}
-
 .modify_button {
   color: white;
   background-color: var(--modify);
   transition: 0.2s;
 }
 
-.modify_button:hover {
-  color: var(--modify);
-  background: white;
-  border-radius: 10px;
-}
-
 #clear_all {
   color: white;
   background-color: red;
   transition: 0.2s;
-}
-
-#clear_all:hover {
-  background-color: white;
-  color: red;
-  border-radius: 10px;
 }
 
 #submit_button,
